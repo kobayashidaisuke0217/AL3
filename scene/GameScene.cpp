@@ -31,8 +31,8 @@ void GameScene::Initialize() {
 	//サウンドデータの読み込み
 	soundDataHandle_ = audio_->LoadWave("fanfare.wav");
 	//音声再生
-	//audio_->PlayWave(soundDataHandle_);
-	//voiceHandle_ = audio_->PlayWave(soundDataHandle_, true);
+	audio_->PlayWave(soundDataHandle_);
+	voiceHandle_ = audio_->PlayWave(soundDataHandle_, true);
     //ライン描画が参照するビュープロジェクションを指定する（アドレス渡し）
 	PrimitiveDrawer::GetInstance()->SetViewProjection(&viewProjection_);
     //デバッグカメラの生成
