@@ -32,6 +32,13 @@ void Player::Update() {
 	worldTransform_.translation_.x = imputFloat3[0];
 	worldTransform_.translation_.y = imputFloat3[1];
 	worldTransform_.translation_.z = imputFloat3[2];
+
+	const float kRotSpeed = 0.02f; 
+	if (input_->PushKey(DIK_A)) {
+		worldTransform_.rotation_.y -= kRotSpeed;
+	} else if (input_->PushKey(DIK_D)) {
+		worldTransform_.rotation_.y += kRotSpeed;
+	}
 	// 押した方向で移動ベクトルを変更
 	if (input_->PushKey(DIK_LEFT)) {
 		move.x -= kCharacterSpeed;
