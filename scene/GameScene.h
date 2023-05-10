@@ -9,6 +9,8 @@
 #include "ViewProjection.h"
 #include "WorldTransform.h"
 #include "Player.h"
+#include"DebugCamera.h"
+
 /// <summary>
 /// ゲームシーン
 /// </summary>
@@ -47,9 +49,13 @@ private: // メンバ変数
 
 	uint32_t textyreHandle_ = 0;
 	Model* model_ = nullptr;
-	ViewProjection viewprojection_;
+	ViewProjection viewProjection_;
 
 	Player* player_ = nullptr;
+	//デバッグカメラ有効
+	bool isDebugcameraActive_ = false;
+	DebugCamera* debugCamera_ = nullptr;
+
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>

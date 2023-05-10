@@ -1,13 +1,13 @@
 #include "GameScene.h"
 #include "TextureManager.h"
 #include <cassert>
-
+#include "AxisIndicator.h"
 GameScene::GameScene() {}
 
 GameScene::~GameScene() { 
 	delete model_;
 	delete player_;
-
+	delete debugCamera_;
 
 }
 
@@ -18,12 +18,33 @@ void GameScene::Initialize() {
 	audio_ = Audio::GetInstance();
 	textyreHandle_ = TextureManager::Load("sample.png");
 	model_ = Model::Create();
-	viewprojection_.Initialize();
+	viewProjection_.Initialize();
 	player_ = new Player();
 	player_->Initialize(model_,textyreHandle_);
+	debugCamera_ = new DebugCamera(1280, 720);
+	// 軸方向の表示を有効にする
+	AxisIndicator::GetInstance()->SetVisible(true);
+	AxisIndicator::GetInstance()->SetTargetViewProjection(&viewProjection_);
 }
 
-void GameScene::Update() { player_->Update(); }
+void GameScene::Update() {
+	player_->Update();
+	debugCamera_->Update();
+	#ifdef _DEBUG
+	if (input_->TriggerKey(DIK_SPACE)) {
+		isDebugcameraActive_ = true;
+	}
+	#endif
+	// カメラの処理
+	if (isDebugcameraActive_==true) {
+		debugCamera_->Update();
+		viewProjection_.matView = debugCamera_->GetViewProjection().matView;
+		viewProjection_.matProjection = debugCamera_->GetViewProjection().matProjection;
+		viewProjection_.TransferMatrix();
+	} else {
+		viewProjection_.UpdateMatrix();
+	}
+}
 
 void GameScene::Draw() {
 
@@ -52,7 +73,7 @@ void GameScene::Draw() {
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
 
-	player_->Draw(viewprojection_);
+	player_->Draw(viewProjection_);
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
 #pragma endregion
