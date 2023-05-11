@@ -6,14 +6,29 @@ Vector3 Player::Add(Vector3 add1, Vector3 add2) {
 	
 	return {add1.x + add2.x, add1.y + add2.y, add1.z + add2.z};
 }
-void Player::Atack() {
-	if (input_->PushKey(DIK_SPACE)) {
-		PlayerBullet* newBulllet = new PlayerBullet();
-		newBulllet->Initialize(model_, worldTransform_.translation_);
-		//弾を登録する
-		bullet_ = newBulllet;
+Player::~Player() {
+	for (PlayerBullet* bullet : bullets_) {
+
+		delete bullet;
 	}
 }
+
+void Player::Atack() {
+	if (input_->PushKey(DIK_SPACE)) {
+		if (count == 0) {
+
+			PlayerBullet* newBulllet = new PlayerBullet();
+			newBulllet->Initialize(model_, worldTransform_.translation_);
+			// 弾を登録する
+			bullets_.push_back(newBulllet);
+			count++;
+		}
+	} else {
+
+		count = 0;
+	}
+}
+
 void Player::Initialize(Model* model, uint32_t textureHandle) {
 	assert(model);
 	model_ = model;
@@ -74,13 +89,15 @@ void Player::Update() {
 	worldTransform_.UpdateMatrix();
 	
 	Atack();
-	if (bullet_) {
-		bullet_->Updarte();
+	for (PlayerBullet* bullet : bullets_) {
+	
+	bullet->Updarte();
 	}
 }
 void Player::Draw(ViewProjection view) {
 	model_->Draw(worldTransform_, view, textureHandle_);
-	if (bullet_) {
-		bullet_->Draw(view);
+	for (PlayerBullet* bullet : bullets_) {
+
+	bullet->Draw(view);
 	}
 }
