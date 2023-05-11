@@ -2,6 +2,7 @@
 #include "Input.h"
 #include "Model.h"
 #include "WorldTransform.h"
+#include"PlayerBullet.h"
 class Player {
 public:
 	void Initialize(Model* model, uint32_t textureHandle);
@@ -18,8 +19,10 @@ public:
 	private:
 	WorldTransform worldTransform_;
 	Model* model_ = nullptr;
-
+	PlayerBullet* bullet_ = nullptr;
 	uint32_t textureHandle_ = 0u;
 	// キーボード入力
 	Input* input_ = nullptr;
+
+	void Atack();
 };
