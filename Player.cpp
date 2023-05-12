@@ -1,7 +1,7 @@
 #include "Player.h"
 #include <cassert>
-#include "matrixCalc.h"
 #include "ImGuiManager.h"
+#include"Vector3Calc.h"
 Vector3 Player::Add(Vector3 add1, Vector3 add2) {
 	
 	return {add1.x + add2.x, add1.y + add2.y, add1.z + add2.z};
@@ -17,8 +17,11 @@ void Player::Atack() {
 	if (input_->PushKey(DIK_SPACE)) {
 		if (count == 0) {
 
+			const float KBulletSped = 1.0f;
+			Vector3 velocity(0,0,KBulletSped);
+			velocity = TransformNormal(velocity, worldTransform_.matWorld_);
 			PlayerBullet* newBulllet = new PlayerBullet();
-			newBulllet->Initialize(model_, worldTransform_.translation_);
+			newBulllet->Initialize(model_, worldTransform_.translation_, velocity);
 			// 弾を登録する
 			bullets_.push_back(newBulllet);
 			count++;
@@ -39,6 +42,15 @@ void Player::Initialize(Model* model, uint32_t textureHandle) {
 }
 
 void Player::Update() {
+	// デスフラグの立った弾を削除
+	bullets_.remove_if([](PlayerBullet* bullet) {
+		if (bullet->isDead()) {
+			delete bullet;
+			return true;
+		}
+		return false;
+	});
+
 	worldTransform_.TransferMatrix();
 	Vector3 move = {0, 0, 0};
 	// キャラクターの移動量

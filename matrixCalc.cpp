@@ -60,6 +60,7 @@ Matrix4x4 MakeRotateZMatrix(float theta) {
 	result.m[3][3] = 1;
 	return result;
 }
+
 Matrix4x4 Multiply(const Matrix4x4& m1, const Matrix4x4& m2) {
 	Matrix4x4 result;
 	float term = 0.0f;
