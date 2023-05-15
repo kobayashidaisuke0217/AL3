@@ -2,10 +2,6 @@
 #include <cassert>
 #include "ImGuiManager.h"
 #include"Vector3Calc.h"
-Vector3 Player::Add(Vector3 add1, Vector3 add2) {
-	
-	return {add1.x + add2.x, add1.y + add2.y, add1.z + add2.z};
-}
 Player::~Player() {
 	for (PlayerBullet* bullet : bullets_) {
 

@@ -13,7 +13,6 @@ public:
 
 	void Draw(ViewProjection view);
 	
-	Vector3 Add(Vector3 add1, Vector3 add2);
 	private:
 	int count = 0;
 	std::list<PlayerBullet*> bullets_;

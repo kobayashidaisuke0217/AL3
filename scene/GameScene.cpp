@@ -8,7 +8,7 @@ GameScene::~GameScene() {
 	delete model_;
 	delete player_;
 	delete debugCamera_;
-	
+	delete enemy_;
 }
 
 void GameScene::Initialize() {
@@ -25,6 +25,8 @@ void GameScene::Initialize() {
 	// 軸方向の表示を有効にする
 	AxisIndicator::GetInstance()->SetVisible(true);
 	AxisIndicator::GetInstance()->SetTargetViewProjection(&viewProjection_);
+	enemy_ = new Enemy();
+	enemy_->Initialize(model_, {0, 0, 0}, {0,0,-0.5});
 }
 
 void GameScene::Update() {
@@ -44,6 +46,7 @@ void GameScene::Update() {
 	} else {
 		viewProjection_.UpdateMatrix();
 	}
+	enemy_->Update();
 }
 
 void GameScene::Draw() {
@@ -72,7 +75,9 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
-
+	if (enemy_) {
+		enemy_->Draw(viewProjection_);
+	}
 	player_->Draw(viewProjection_);
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();

@@ -12,7 +12,7 @@ public:
 	bool isDead() const { return isDead_; }
 
 private:
-	Vector3 Add(Vector3 &a,Vector3 &b);
+
 	WorldTransform worldTransform_;
 	Model* model_;
 	uint32_t texturehandle_ ;

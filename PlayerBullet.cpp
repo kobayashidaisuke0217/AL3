@@ -1,5 +1,6 @@
 #include "PlayerBullet.h"
 #include<assert.h>
+#include "Vector3Calc.h"
 void PlayerBullet::Initialize(Model* model, const Vector3& position,const Vector3& velocity) 
 { assert(model);
 	texturehandle_ = TextureManager::Load("black.png");
@@ -21,4 +22,4 @@ void PlayerBullet::Draw(const ViewProjection& view) {
 	model_->Draw(worldTransform_, view, texturehandle_);
 }
 
-Vector3 PlayerBullet::Add(Vector3& a, Vector3& b) { return {a.x + b.x, a.y + b.y, a.z + b.z}; }
+//Vector3 PlayerBullet::Add(Vector3& a, Vector3& b) { return {a.x + b.x, a.y + b.y, a.z + b.z}; }

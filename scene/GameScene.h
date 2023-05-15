@@ -10,7 +10,7 @@
 #include "WorldTransform.h"
 #include "Player.h"
 #include"DebugCamera.h"
-
+#include"Enemy.h"
 /// <summary>
 /// ゲームシーン
 /// </summary>
@@ -55,7 +55,7 @@ private: // メンバ変数
 	//デバッグカメラ有効
 	bool isDebugcameraActive_ = false;
 	DebugCamera* debugCamera_ = nullptr;
-
+	Enemy* enemy_ = nullptr;
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>
