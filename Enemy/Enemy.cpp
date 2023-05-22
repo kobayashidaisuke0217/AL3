@@ -1,5 +1,7 @@
 #include "Enemy.h"
+#include "ImGuiManager.h"
 #include <assert.h>
+
 void Enemy::Initialize(Model* model, const Vector3& position, const Vector3& velocity) {
 	assert(model);
 	texturehandle_ = TextureManager::Load("black.png");
@@ -9,23 +11,12 @@ void Enemy::Initialize(Model* model, const Vector3& position, const Vector3& vel
 	velocity_ = velocity;
 }
 
-void Enemy::Update() { 
+void Enemy::Update() {
+
+	(this->*EfuncTable[static_cast<size_t>(phase_)])();
 	worldTransform_.UpdateMatrix();
-	/*worldTransform_.translation_ = Add(worldTransform_.translation_, velocity_);*/
-	switch (phase_) {
-	case Phase::Approach:
-		Approach();
-		break;
-	case Phase::Leave:
-		Leave();
-		break;
-	case Phase::start:
 
-		break;
-	default:
-		break;
-	}
-
+	ImGui::Text("phase_ %d", phase_);
 }
 
 void Enemy::Draw(const ViewProjection& view) {
@@ -44,3 +35,8 @@ void Enemy::Leave() {
 
 	worldTransform_.translation_ = Add(worldTransform_.translation_, {-0.5f, 0.5f, 0.0f});
 }
+
+void (Enemy::*Enemy::EfuncTable[])() = {
+    &Enemy::Approach, &Enemy::Leave
+
+};
