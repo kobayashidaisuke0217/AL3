@@ -9,6 +9,11 @@ public:
 	void Update();
 	void Draw(const ViewProjection& view);
 
+	Vector3 GetPos() { return worldTransform_.translation_; }
+	void Setpos(const Vector3& pos) { worldTransform_.translation_ = pos; }
+	void SetSpeed(const Vector3& speed) { velocity_ = speed; }
+	Vector3 GetSpeed() { return velocity_; }
+
 private:
 	enum class Phase {
 		Approach, // 接近
