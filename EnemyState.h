@@ -1,6 +1,9 @@
 #pragma once
 #include "Enemy/Enemy.h"
+class Enemy;
 class EnemyState {
+	
+
 protected:
 	Enemy* enemy_;
 
@@ -9,9 +12,9 @@ public:
 };
 class EnemyStateApproach:public EnemyState {
 public:
-	void Update();
+	static void Update();
 };
 class EnemyStateleave:public EnemyState {
 public:
-	void Update();
+	static void Update();
 };

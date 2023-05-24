@@ -11,8 +11,8 @@ void Enemy::Initialize(Model* model, const Vector3& position, const Vector3& vel
 
 void Enemy::Update() { 
 	worldTransform_.UpdateMatrix();
-	/*worldTransform_.translation_ = Add(worldTransform_.translation_, velocity_);*/
-	switch (phase_) {
+	worldTransform_.translation_ = Add(worldTransform_.translation_, velocity_);
+	/*switch (phase_) {
 	case Phase::Approach:
 		Approach();
 		break;
@@ -24,7 +24,7 @@ void Enemy::Update() {
 		break;
 	default:
 		break;
-	}
+	}*/
 
 }
 
