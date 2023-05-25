@@ -2,8 +2,6 @@
 
 EnemyState::~EnemyState() {}
 
-
-
 void EnemyStateApproach::Update(Enemy* enemy_) {
 	const Vector3 kCharacterApproachSpeed = {0.0f, 0.0f, -0.5f};
 
@@ -18,5 +16,3 @@ void EnemyStateLeave::Update(Enemy* enemy_) {
 
 	enemy_->Move(kCharacterLeaveSpeed);
 }
-
-

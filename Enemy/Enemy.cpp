@@ -1,9 +1,7 @@
 #include "Enemy.h"
 #include <assert.h>
 
-Enemy::Enemy() {
-
-}
+Enemy::Enemy() {}
 Enemy::~Enemy() { delete state_; }
 
 void Enemy::Initialize(Model* model, const Vector3& position, const Vector3& velocity) {
@@ -16,25 +14,22 @@ void Enemy::Initialize(Model* model, const Vector3& position, const Vector3& vel
 	state_ = new EnemyStateApproach();
 }
 
-void Enemy::Update() { 
+void Enemy::Update() {
 	worldTransform_.UpdateMatrix();
 
 	state_->Update(this);
-	
-
 }
 
 void Enemy::Draw(const ViewProjection& view) {
 	model_->Draw(worldTransform_, view, texturehandle_);
 }
 
-void Enemy::Move(Vector3 speed) {
+void Enemy::Move(Vector3 velocity) {
 
-	worldTransform_.translation_ = Add(worldTransform_.translation_,speed);
+	worldTransform_.translation_ = Add(worldTransform_.translation_, velocity);
 }
 
-void Enemy::ChangeEnemyState(EnemyState* enemyState) { delete state_;
+void Enemy::ChangeEnemyState(EnemyState* enemyState) {
+	delete state_;
 	state_ = enemyState;
-
 }
-
