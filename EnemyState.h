@@ -2,19 +2,21 @@
 #include "Enemy/Enemy.h"
 class Enemy;
 class EnemyState {
-	
 
-protected:
-	Enemy* enemy_;
 
 public:
-	void Update();
+	virtual ~EnemyState();
+	virtual void Update(Enemy* enemy_)=0;
+	
 };
 class EnemyStateApproach:public EnemyState {
 public:
-	static void Update();
-};
-class EnemyStateleave:public EnemyState {
+	void Update(Enemy* enemy_);
+
+
+	};
+class EnemyStateLeave:public EnemyState {
 public:
-	static void Update();
+	void Update(Enemy* enemy_);
+	
 };

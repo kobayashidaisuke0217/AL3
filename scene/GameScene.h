@@ -1,16 +1,16 @@
 #pragma once
 
 #include "Audio.h"
+#include "DebugCamera.h"
 #include "DirectXCommon.h"
+#include "Enemy/Enemy.h"
 #include "Input.h"
 #include "Model.h"
+#include "Player/Player.h"
 #include "SafeDelete.h"
 #include "Sprite.h"
 #include "ViewProjection.h"
 #include "WorldTransform.h"
-#include "Player/Player.h"
-#include"DebugCamera.h"
-#include"Enemy/Enemy.h"
 /// <summary>
 /// ゲームシーン
 /// </summary>
@@ -52,7 +52,7 @@ private: // メンバ変数
 	ViewProjection viewProjection_;
 
 	Player* player_ = nullptr;
-	//デバッグカメラ有効
+	// デバッグカメラ有効
 	bool isDebugcameraActive_ = false;
 	DebugCamera* debugCamera_ = nullptr;
 	Enemy* enemy_ = nullptr;
