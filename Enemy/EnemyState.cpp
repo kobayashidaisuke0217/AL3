@@ -2,17 +2,27 @@
 
 EnemyState::~EnemyState() {}
 
-void EnemyStateApproach::Update(Enemy* enemy_) {
-	const Vector3 kCharacterApproachSpeed = {0.0f, 0.0f, -0.5f};
+void EnemyStateApproach::Update() {
+	if (--enemy->fireTimer <= 0) {
+		enemy->Fire();
+		enemy->fireTimer = enemy->kFireInterval;
+	}
+	const Vector3 kCharacterApproachSpeed = {0.0f, 0.0f, -0.1f};
 
-	enemy_->Move(kCharacterApproachSpeed);
-	if (enemy_->GetPos().z <= -15.0f) {
-		enemy_->ChangeEnemyState(new EnemyStateLeave());
+	enemy->Move(kCharacterApproachSpeed);
+	if (enemy->GetPos().z <= -15.0f) {
+		enemy->ChangeEnemyState(new EnemyStateLeave());
 	}
 }
 
-void EnemyStateLeave::Update(Enemy* enemy_) {
-	const Vector3 kCharacterLeaveSpeed = {-0.5f, 0.5f, 0.0f};
-
-	enemy_->Move(kCharacterLeaveSpeed);
+void EnemyStateApproach::Initialize(Enemy* enemy_) { enemy = enemy_; 
+enemy->fireTimer = enemy->kFireInterval;
 }
+
+void EnemyStateLeave::Update() {
+	const Vector3 kCharacterLeaveSpeed = {-0.1f, 0.1f, 0.0f};
+
+	enemy->Move(kCharacterLeaveSpeed);
+}
+
+void EnemyStateLeave::Initialize(Enemy* enemy_) { enemy = enemy_; }

@@ -3,6 +3,7 @@
 #include "Model.h"
 #include "Vector3Calc.h"
 #include <WorldTransform.h>
+#include "EnemyBullet.h"
 class EnemyState;
 class Enemy {
 
@@ -18,6 +19,11 @@ public:
 	void Move(Vector3 velocity);
 	Vector3 GetSpeed() { return velocity_; }
 	void ChangeEnemyState(EnemyState* enemyState);
+	void Fire();
+	
+	//発射間隔
+	static const int kFireInterval = 60;
+	int32_t fireTimer;
 
 private:
 	EnemyState* state_;
@@ -25,4 +31,7 @@ private:
 	Model* model_;
 	uint32_t texturehandle_;
 	Vector3 velocity_;
+
+	std::list<EnemyBullet*> bullets_;
+	
 };
