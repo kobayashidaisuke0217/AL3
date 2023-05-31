@@ -19,6 +19,7 @@ public:
 	void Move(Vector3 velocity);
 	Vector3 GetSpeed() { return velocity_; }
 	void ChangeEnemyState(EnemyState* enemyState);
+
 	void Fire();
 	
 	//発射間隔

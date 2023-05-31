@@ -1,12 +1,28 @@
 #include "EnemyState.h"
 
-EnemyState::~EnemyState() {}
+EnemyState::~EnemyState() {
+
+}
+
+EnemyStateApproach::~EnemyStateApproach() {
+	for (TimeCall* timeCall : timecalls_) {
+
+		delete timeCall;
+	}
+}
 
 void EnemyStateApproach::Update() {
-	if (--enemy->fireTimer <= 0) {
-		enemy->Fire();
-		enemy->fireTimer = enemy->kFireInterval;
+	timecalls_.remove_if([](TimeCall* timecall) {
+		if (timecall->IsFinish()) {
+			delete timecall;
+			return true;
+		}
+		return false;
+	});
+	for (TimeCall*timecall:timecalls_) {
+		timecall->Update();
 	}
+		
 	const Vector3 kCharacterApproachSpeed = {0.0f, 0.0f, -0.1f};
 
 	enemy->Move(kCharacterApproachSpeed);
@@ -17,6 +33,14 @@ void EnemyStateApproach::Update() {
 
 void EnemyStateApproach::Initialize(Enemy* enemy_) { enemy = enemy_; 
 enemy->fireTimer = enemy->kFireInterval;
+	FireAndReset();
+}
+
+void EnemyStateApproach::FireAndReset() { 
+	enemy->Fire();
+
+	timecalls_.push_back(
+	    new TimeCall(std::bind(&EnemyStateApproach::FireAndReset, this), enemy->kFireInterval));
 }
 
 void EnemyStateLeave::Update() {

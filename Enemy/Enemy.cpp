@@ -8,6 +8,7 @@ Enemy::~Enemy() {
 		delete bullet;
 	}
 	delete state_; 
+	
 }
 
 void Enemy::Initialize(Model* model, const Vector3& position, const Vector3& velocity) {
@@ -64,6 +65,8 @@ void Enemy::ChangeEnemyState(EnemyState* enemyState) {
 	state_ = enemyState;
 	state_->Initialize(this);
 }
+
+
 
 void Enemy::Fire() {
 	//弾の速度
