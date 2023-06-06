@@ -13,6 +13,7 @@ public:
 
 	void Draw(ViewProjection view);
 	
+	Vector3 GetWorldPos();
 	private:
 	int count = 0;
 	std::list<PlayerBullet*> bullets_;

@@ -109,3 +109,10 @@ void Player::Draw(ViewProjection view) {
 	bullet->Draw(view);
 	}
 }
+
+Vector3 Player::GetWorldPos() { 
+	Vector3 worldPos;
+	worldPos.x = 0;
+	worldPos.y = 0;
+	worldPos.z = 0;
+	return worldPos; }
