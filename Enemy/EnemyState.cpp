@@ -32,7 +32,7 @@ void EnemyStateApproach::Update() {
 }
 
 void EnemyStateApproach::Initialize(Enemy* enemy_) { enemy = enemy_; 
-enemy->fireTimer = enemy->kFireInterval;
+//enemy->fireTimer = enemy->kFireInterval;
 	FireAndReset();
 }
 

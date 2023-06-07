@@ -50,11 +50,12 @@ void Enemy::Update() {
 }
 
 void Enemy::Draw(const ViewProjection& view) {
-	model_->Draw(worldTransform_, view, texturehandle_);
+	
 	for (EnemyBullet* bullet : bullets_) {
 
 		bullet->Draw(view);
 	}
+	model_->Draw(worldTransform_, view, texturehandle_);
 }
 
 void Enemy::Move(Vector3 velocity) {
@@ -79,8 +80,8 @@ void Enemy::Fire() {
 	Vector3 enemyPos = GetWorldPos();
 	Vector3 velocity = Subtract(playerPos, enemyPos);
 	velocity = Multiply(kBulletSpeed, Normalise(velocity));
-	//生成と初期化
 	EnemyBullet* newBullet = new EnemyBullet();
+	//生成と初期化
 	newBullet->Initialize(model_, worldTransform_.translation_, velocity);
 	bullets_.push_back(newBullet);
 
