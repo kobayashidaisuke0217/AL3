@@ -77,12 +77,15 @@ void Enemy::Fire() {
 	//弾の速度
 	const float kBulletSpeed = 1.0f;
 	Vector3 playerPos = player_->GetWorldPos();
-	Vector3 enemyPos = GetWorldPos();
+	Vector3 enemyPos = this->GetWorldPos();
 	Vector3 velocity = Subtract(playerPos, enemyPos);
-	velocity = Multiply(kBulletSpeed, Normalise(velocity));
+	velocity = Normalise(velocity);
+	velocity.x *= kBulletSpeed;
+	velocity.y *= kBulletSpeed;
+	velocity.z *= kBulletSpeed;
 	EnemyBullet* newBullet = new EnemyBullet();
 	//生成と初期化
-	newBullet->Initialize(model_, worldTransform_.translation_, velocity);
+	newBullet->Initialize(model_, worldTransform_.translation_,velocity);
 	bullets_.push_back(newBullet);
 
 
@@ -90,8 +93,10 @@ void Enemy::Fire() {
 
 Vector3 Enemy::GetWorldPos() {
 	Vector3 worldPos;
+	worldTransform_.UpdateMatrix();
 	worldPos.x = worldTransform_.matWorld_.m[3][0];
 	worldPos.y = worldTransform_.matWorld_.m[3][1];
 	worldPos.z = worldTransform_.matWorld_.m[3][2];
+
 	return worldPos;
 }
