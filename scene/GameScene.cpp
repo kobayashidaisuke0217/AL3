@@ -2,6 +2,7 @@
 #include "AxisIndicator.h"
 #include "TextureManager.h"
 #include <cassert>
+
 GameScene::GameScene() {}
 
 GameScene::~GameScene() {
@@ -25,9 +26,11 @@ void GameScene::Initialize() {
 	// 軸方向の表示を有効にする
 	AxisIndicator::GetInstance()->SetVisible(true);
 	AxisIndicator::GetInstance()->SetTargetViewProjection(&viewProjection_);
+	
 	enemy_ = new Enemy();
-	enemy_->Initialize(model_, {14, 0, 5}, {0, 0, -0.5});
 	enemy_->SetPlayer(player_);
+	enemy_->Initialize(model_, {14, 0, 40}, {0, 0, -0.5});
+	
 }
 
 void GameScene::Update() {

@@ -27,6 +27,7 @@ public:
 	static const int kFireInterval = 60;
 	int32_t fireTimer;
 	void SetPlayer(Player* player) { player_ = player; }
+	Vector3 GetWorldPos();
 
 private:
 	EnemyState* state_;

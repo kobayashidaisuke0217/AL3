@@ -37,6 +37,7 @@ enemy->fireTimer = enemy->kFireInterval;
 }
 
 void EnemyStateApproach::FireAndReset() { 
+	
 	enemy->Fire();
 
 	timecalls_.push_back(
