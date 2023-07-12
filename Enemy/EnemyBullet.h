@@ -25,5 +25,6 @@ private:
 	int32_t deathTimer_ = kLifeTime;
 	Player* player_;
 
+
 	bool isDead_ = false;
 };
