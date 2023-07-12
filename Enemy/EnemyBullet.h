@@ -10,6 +10,9 @@ public:
 	void Draw(const ViewProjection& view);
 
 	bool isDead() const { return isDead_; }
+	void SetPlayer(Player* player) { player_ = player; }
+	void OnCollision();
+	Vector3 GetWorldPos();
 
 private:
 	WorldTransform worldTransform_;

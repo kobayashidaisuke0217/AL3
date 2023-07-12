@@ -91,6 +91,8 @@ void Enemy::Fire() {
 
 }
 
+void Enemy::OnCollision() {}
+
 Vector3 Enemy::GetWorldPos() {
 	Vector3 worldPos;
 	worldTransform_.UpdateMatrix();

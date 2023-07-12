@@ -59,6 +59,7 @@ void Player::Update() {
 	// デバッグ
 	ImGui::Begin("Debug");
 	ImGui::SliderFloat3("player", imputFloat3, -30.0f, 30.0f);
+	ImGui::Text("DebugCamera  Enter");
 	ImGui::End();
 	worldTransform_.translation_.x = imputFloat3[0];
 	worldTransform_.translation_.y = imputFloat3[1];
@@ -69,6 +70,11 @@ void Player::Update() {
 		worldTransform_.rotation_.y -= kRotSpeed;
 	} else if (input_->PushKey(DIK_D)) {
 		worldTransform_.rotation_.y += kRotSpeed;
+	}
+	if (input_->PushKey(DIK_W)) {
+		worldTransform_.rotation_.x -= kRotSpeed;
+	} else if (input_->PushKey(DIK_S)) {
+		worldTransform_.rotation_.x += kRotSpeed;
 	}
 	// 押した方向で移動ベクトルを変更
 	if (input_->PushKey(DIK_LEFT)) {
@@ -116,4 +122,7 @@ Vector3 Player::GetWorldPos() {
 	worldPos.x = worldTransform_.matWorld_.m[3][0];
 	worldPos.y = worldTransform_.matWorld_.m[3][1];
 	worldPos.z = worldTransform_.matWorld_.m[3][2];
-	return worldPos; }
+	return worldPos;
+}
+
+void Player::OnCollision() {}

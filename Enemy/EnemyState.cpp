@@ -23,7 +23,7 @@ void EnemyStateApproach::Update() {
 		timecall->Update();
 	}
 		
-	const Vector3 kCharacterApproachSpeed = {0.0f, 0.0f, -0.1f};
+	const Vector3 kCharacterApproachSpeed = {0.0f, 0.0f, 0.0f};
 
 	enemy->Move(kCharacterApproachSpeed);
 	if (enemy->GetPos().z <= -15.0f) {

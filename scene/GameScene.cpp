@@ -51,6 +51,7 @@ void GameScene::Update() {
 		viewProjection_.UpdateMatrix();
 	}
 	enemy_->Update();
+	CheckAllCollision();
 }
 
 void GameScene::Draw() {
@@ -98,5 +99,62 @@ void GameScene::Draw() {
 	// スプライト描画後処理
 	Sprite::PostDraw();
 
+#pragma endregion
+}
+
+void GameScene::CheckAllCollision() { Vector3 posA, posB;
+	float enemyBulletRadius = 0.5f;
+	float playerBulletRadius = 0.5f;
+	float playeyrRadius = 1.0f;
+	float enemyRadius = 1.0f;
+	const std::list<PlayerBullet*>& playerBullets = player_->GetBullets();
+	const std::list<EnemyBullet*>& enemyBullets = enemy_->GetBullets();
+	#pragma region 自キャラと敵弾の当たり判定
+	posA = player_->GetWorldPos();
+	for (EnemyBullet* bullet : enemyBullets) {
+		posB = bullet->GetWorldPos();
+	
+	Vector3 Distance = {
+		    (posB.x - posA.x) * (posB.x - posA.x), (posB.y - posA.y) * (posB.y - posA.y),
+		    (posB.z - posA.z) * (posB.z - posA.z)};
+		if (Distance.x + Distance.y  + Distance.z  <=
+		    (playeyrRadius + enemyBulletRadius) * (playeyrRadius + enemyBulletRadius)){
+		player_->OnCollision();
+			bullet->OnCollision();
+		}
+	}
+	#pragma endregion
+#pragma region 自弾と敵キャラの当たり判定
+	posA = enemy_->GetWorldPos();
+	for (PlayerBullet* bullet : playerBullets) {
+		posB = bullet->GetWorldPos();
+
+		Vector3 Distance = {
+		    (posB.x - posA.x) * (posB.x - posA.x), (posB.y - posA.y) * (posB.y - posA.y),
+		    (posB.z - posA.z) * (posB.z - posA.z)};
+		if (Distance.x + Distance.y + Distance.z <=
+		    (enemyRadius + playerBulletRadius) * (enemyRadius + playerBulletRadius)) {
+			enemy_->OnCollision();
+			bullet->OnCollision();
+		}
+	}
+#pragma endregion
+#pragma region 自弾と敵弾の当たり判定
+	for (EnemyBullet* eBullet : enemyBullets) {
+
+		posA = eBullet->GetWorldPos();
+		for (PlayerBullet* pbullet : playerBullets) {
+			posB = pbullet->GetWorldPos();
+
+			Vector3 Distance = {
+			    (posB.x - posA.x) * (posB.x - posA.x), (posB.y - posA.y) * (posB.y - posA.y),
+			    (posB.z - posA.z) * (posB.z - posA.z)};
+			if (Distance.x + Distance.y + Distance.z <=
+			    (enemyBulletRadius + playerBulletRadius) * (enemyBulletRadius + playerBulletRadius)) {
+				eBullet->OnCollision();
+				pbullet->OnCollision();
+			}
+		}
+	}
 #pragma endregion
 }

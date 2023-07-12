@@ -59,4 +59,6 @@ private: // メンバ変数
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>
+private:
+	void CheckAllCollision();
 };

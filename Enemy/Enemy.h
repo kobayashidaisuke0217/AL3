@@ -22,12 +22,13 @@ public:
 	void ChangeEnemyState(EnemyState* enemyState);
 
 	void Fire();
-	
+	void OnCollision();
 	//発射間隔
 	static const int kFireInterval = 60;
 	int32_t fireTimer;
 	void SetPlayer(Player* player) { player_ = player; }
 	Vector3 GetWorldPos();
+	const std::list<EnemyBullet*>& GetBullets() const { return bullets_; }
 
 private:
 	EnemyState* state_;
@@ -36,7 +37,7 @@ private:
 	uint32_t texturehandle_;
 	Vector3 velocity_;
 
-	std::list<EnemyBullet*> bullets_;
+	 std::list<EnemyBullet*> bullets_;
 	
 	Player* player_ = nullptr;
 };
