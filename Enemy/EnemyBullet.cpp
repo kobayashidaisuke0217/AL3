@@ -9,7 +9,7 @@ void EnemyBullet::Initialize(Model* model, const Vector3& position, const Vector
 	model_ = model;
 	worldTransform_.Initialize();
 	worldTransform_.translation_ = position;
-	worldTransform_.scale_ = {0.5f, 0.5f, 0.5f};
+	worldTransform_.scale_ = {0.5f, 0.5f, 3.0f};
 	velocity_ = velocity;
 	// Y軸回り
 	worldTransform_.rotation_.y = std::atan2(velocity_.x, velocity_.z);
