@@ -1,7 +1,7 @@
 #pragma once
 #include "Model.h"
 #include "WorldTransform.h"
-#include"Player/Player.h"
+class Player;
 class EnemyBullet {
 public:
 	void Initialize(Model* model, const Vector3& position, const Vector3& velocity);
@@ -20,7 +20,7 @@ private:
 	Model* model_;
 	uint32_t texturehandle_;
 	Vector3 velocity_;
-	static const int32_t kLifeTime = 10*5;
+	static const int32_t kLifeTime = 10*20;
 
 	int32_t deathTimer_ = kLifeTime;
 	Player* player_;

@@ -1,9 +1,10 @@
 #include "EnemyBullet.h"
 #include "Vector3Calc.h"
 #include <assert.h>
+#include "Player/Player.h"
 void EnemyBullet::Initialize(Model* model, const Vector3& position, const Vector3& velocity) {
 
-assert(model);
+	assert(model);
 	texturehandle_ = TextureManager::Load("enemyBullet.png");
 	model_ = model;
 	worldTransform_.Initialize();
@@ -13,7 +14,7 @@ assert(model);
 	// Y軸回り
 	worldTransform_.rotation_.y = std::atan2(velocity_.x, velocity_.z);
 	float velociteXZ = Length({velocity_.x, 0.0f, velocity_.z});
-	//X軸回り
+	// X軸回り
 	worldTransform_.rotation_.x = std::atan2(-velocity_.y, velociteXZ);
 }
 
@@ -21,14 +22,13 @@ void EnemyBullet::Updarte() {
 	//Vector3 toPlayer = Subtract(player_->GetWorldPos(), worldTransform_.translation_);
 	//toPlayer = Normalise(toPlayer);
 	//velocity_ = Normalise(velocity_);
-	//velocity_ = Slerp(0.1f, velocity_,toPlayer );
+	//velocity_ = Slerp(0.1f, velocity_, toPlayer);
 
 	//// Y軸回り
 	//worldTransform_.rotation_.y = std::atan2(velocity_.x, velocity_.z);
 	//float velociteXZ = Length({velocity_.x, 0.0f, velocity_.z});
 	//// X軸回り
 	//worldTransform_.rotation_.x = std::atan2(-velocity_.y, velociteXZ);
-
 
 	worldTransform_.UpdateMatrix();
 	worldTransform_.translation_ = Add(worldTransform_.translation_, velocity_);
@@ -40,7 +40,6 @@ void EnemyBullet::Updarte() {
 void EnemyBullet::Draw(const ViewProjection& view) {
 	model_->Draw(worldTransform_, view, texturehandle_);
 }
-
 void EnemyBullet::OnCollision() { isDead_ = true; }
 
 Vector3 EnemyBullet::GetWorldPos() { 

@@ -84,6 +84,7 @@ void Enemy::Fire() {
 	velocity.y *= kBulletSpeed;
 	velocity.z *= kBulletSpeed;
 	EnemyBullet* newBullet = new EnemyBullet();
+	newBullet->SetPlayer(player_);
 	//生成と初期化
 	newBullet->Initialize(model_, worldTransform_.translation_,velocity);
 	bullets_.push_back(newBullet);

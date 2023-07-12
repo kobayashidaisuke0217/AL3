@@ -23,7 +23,7 @@ void EnemyStateApproach::Update() {
 		timecall->Update();
 	}
 		
-	const Vector3 kCharacterApproachSpeed = {0.0f, 0.0f, 0.0f};
+	const Vector3 kCharacterApproachSpeed = {0.0f, 0.0f, -0.1f};
 
 	enemy->Move(kCharacterApproachSpeed);
 	if (enemy->GetPos().z <= -15.0f) {
@@ -45,9 +45,12 @@ void EnemyStateApproach::FireAndReset() {
 }
 
 void EnemyStateLeave::Update() {
-	const Vector3 kCharacterLeaveSpeed = {-0.1f, 0.1f, 0.0f};
+	const Vector3 kCharacterLeaveSpeed = {0.0f, 0.0f, 0.5f};
 
 	enemy->Move(kCharacterLeaveSpeed);
+	if (enemy->GetPos().z >= 40.0f) {
+		enemy->ChangeEnemyState(new EnemyStateApproach());
+	}
 }
 
 void EnemyStateLeave::Initialize(Enemy* enemy_) { enemy = enemy_; }
