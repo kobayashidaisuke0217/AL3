@@ -102,59 +102,44 @@ void GameScene::Draw() {
 #pragma endregion
 }
 
-void GameScene::CheckAllCollision() { Vector3 posA, posB;
-	float enemyBulletRadius = 0.5f;
-	float playerBulletRadius = 0.5f;
-	float playeyrRadius = 1.0f;
-	float enemyRadius = 1.0f;
+void GameScene::CheckAllCollision() {
+
 	const std::list<PlayerBullet*>& playerBullets = player_->GetBullets();
 	const std::list<EnemyBullet*>& enemyBullets = enemy_->GetBullets();
-	#pragma region 自キャラと敵弾の当たり判定
-	posA = player_->GetWorldPos();
-	for (EnemyBullet* bullet : enemyBullets) {
-		posB = bullet->GetWorldPos();
-	
-	Vector3 Distance = {
-		    (posB.x - posA.x) * (posB.x - posA.x), (posB.y - posA.y) * (posB.y - posA.y),
-		    (posB.z - posA.z) * (posB.z - posA.z)};
-		if (Distance.x + Distance.y  + Distance.z  <=
-		    (playeyrRadius + enemyBulletRadius) * (playeyrRadius + enemyBulletRadius)){
-		player_->OnCollision();
-			bullet->OnCollision();
-		}
-	}
-	#pragma endregion
-#pragma region 自弾と敵キャラの当たり判定
-	posA = enemy_->GetWorldPos();
-	for (PlayerBullet* bullet : playerBullets) {
-		posB = bullet->GetWorldPos();
+#pragma region 自キャラと敵弾の当たり判定
 
-		Vector3 Distance = {
-		    (posB.x - posA.x) * (posB.x - posA.x), (posB.y - posA.y) * (posB.y - posA.y),
-		    (posB.z - posA.z) * (posB.z - posA.z)};
-		if (Distance.x + Distance.y + Distance.z <=
-		    (enemyRadius + playerBulletRadius) * (enemyRadius + playerBulletRadius)) {
-			enemy_->OnCollision();
-			bullet->OnCollision();
-		}
+	for (EnemyBullet* bullet : enemyBullets) {
+		CheckCollisionPair(bullet, player_);
+	}
+#pragma endregion
+#pragma region 自弾と敵キャラの当たり判定
+
+	for (PlayerBullet* bullet : playerBullets) {
+		CheckCollisionPair(bullet, enemy_);
 	}
 #pragma endregion
 #pragma region 自弾と敵弾の当たり判定
 	for (EnemyBullet* eBullet : enemyBullets) {
 
-		posA = eBullet->GetWorldPos();
 		for (PlayerBullet* pbullet : playerBullets) {
-			posB = pbullet->GetWorldPos();
 
-			Vector3 Distance = {
-			    (posB.x - posA.x) * (posB.x - posA.x), (posB.y - posA.y) * (posB.y - posA.y),
-			    (posB.z - posA.z) * (posB.z - posA.z)};
-			if (Distance.x + Distance.y + Distance.z <=
-			    (enemyBulletRadius + playerBulletRadius) * (enemyBulletRadius + playerBulletRadius)) {
-				eBullet->OnCollision();
-				pbullet->OnCollision();
-			}
+			CheckCollisionPair(eBullet, pbullet);
 		}
 	}
 #pragma endregion
 }
+
+void GameScene::CheckCollisionPair(Collider* colliderA, Collider* colliderB) {
+	Vector3 posA = colliderA->GetWorldPos();
+	Vector3 posB = colliderB->GetWorldPos();
+	float radA = colliderA->Getradius();
+	float radB = colliderB->Getradius();
+	Vector3 Distance = {
+	    (posB.x - posA.x) * (posB.x - posA.x), (posB.y - posA.y) * (posB.y - posA.y),
+	    (posB.z - posA.z) * (posB.z - posA.z)};
+	if (Distance.x + Distance.y + Distance.z <= (radA + radB) * (radA + radB)) {
+		colliderA->OnCollision();
+		colliderB->OnCollision();
+	}
+}
+

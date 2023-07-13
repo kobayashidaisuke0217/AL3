@@ -1,7 +1,8 @@
 #pragma once
 #include "Model.h"
 #include "WorldTransform.h"
-class PlayerBullet {
+#include "Collider.h"
+class PlayerBullet : public Collider {
 public:
 	void Initialize(Model* model, const Vector3& position,const Vector3& velocity);
 
@@ -11,9 +12,9 @@ public:
 
 	bool isDead() const { return isDead_; }
 
-	void OnCollision();
+	void OnCollision() override;
 
-	Vector3 GetWorldPos();
+	Vector3 GetWorldPos() override;
 
 private:
 

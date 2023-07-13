@@ -4,9 +4,10 @@
 #include "Vector3Calc.h"
 #include <WorldTransform.h>
 #include "EnemyBullet.h"
+#include "Collider.h"
 class Player;
 class EnemyState;
-class Enemy {
+class Enemy:public Collider {
 
 public:
 	Enemy();
@@ -22,12 +23,13 @@ public:
 	void ChangeEnemyState(EnemyState* enemyState);
 
 	void Fire();
-	void OnCollision();
+	void OnCollision() override;
+	Vector3 GetWorldPos() override;
 	//発射間隔
 	static const int kFireInterval = 60;
 	int32_t fireTimer;
 	void SetPlayer(Player* player) { player_ = player; }
-	Vector3 GetWorldPos();
+	
 	const std::list<EnemyBullet*>& GetBullets() const { return bullets_; }
 
 private:

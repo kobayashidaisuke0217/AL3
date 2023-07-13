@@ -224,6 +224,9 @@
     <ClInclude Include="Utility\time\TimeCall.h">
       <Filter>ヘッダー ファイル\utility</Filter>
     </ClInclude>
+    <ClInclude Include="Collider.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\SpritePS.hlsl">
