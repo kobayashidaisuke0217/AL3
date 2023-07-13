@@ -227,7 +227,7 @@
     <ClInclude Include="Manager\Collider\Collider.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="CollisionConfig.h">
+    <ClInclude Include="Manager\Collider\CollisionConfig.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

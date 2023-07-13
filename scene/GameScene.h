@@ -11,7 +11,7 @@
 #include "Sprite.h"
 #include "ViewProjection.h"
 #include "WorldTransform.h"
-#include "CollisionConfig.h"
+#include "Manager/Collider/CollisionConfig.h"
 /// <summary>
 /// ゲームシーン
 /// </summary>

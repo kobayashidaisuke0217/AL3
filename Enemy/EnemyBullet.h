@@ -1,7 +1,7 @@
 #pragma once
 #include "Model.h"
 #include "Manager/Collider/Collider.h"
-#include "CollisionConfig.h"
+#include "Manager/Collider/CollisionConfig.h"
 class Player;
 class EnemyBullet : public Collider {
 public:

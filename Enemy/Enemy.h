@@ -5,7 +5,7 @@
 #include <WorldTransform.h>
 #include "EnemyBullet.h"
 #include "Manager/Collider/Collider.h"
-#include "CollisionConfig.h"
+#include "Manager/Collider/CollisionConfig.h"
 class Player;
 class EnemyState;
 class Enemy:public Collider {
