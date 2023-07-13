@@ -11,6 +11,7 @@ GameScene::~GameScene() {
 	delete debugCamera_;
 	delete enemy_;
 	delete collisionManager_;
+	delete skyDome_;
 	delete skyDomeModel_;
 }
 
