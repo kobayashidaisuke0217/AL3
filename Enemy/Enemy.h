@@ -1,7 +1,7 @@
 #pragma once
 #include "EnemyState.h"
 #include "Model.h"
-#include "Vector3Calc.h"
+#include "MyMath.h"
 #include <WorldTransform.h>
 #include "EnemyBullet.h"
 #include "Manager/Collider/Collider.h"

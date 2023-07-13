@@ -14,6 +14,7 @@
 #include "Manager/Collider/CollisionConfig.h"
 #include"Manager/Collider/CollisionManager.h"
 #include "SkyDome.h"
+#include "RailCamera.h"
 /// <summary>
 /// ゲームシーン
 /// </summary>
@@ -62,7 +63,7 @@ private: // メンバ変数
 	Enemy* enemy_ = nullptr;
 	CollisionManager* collisionManager_;
 	SkyDome* skyDome_;
-	
+	RailCamera* railCamera_;
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>

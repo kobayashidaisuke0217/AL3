@@ -1,5 +1,5 @@
 #include "PlayerBullet.h"
-#include "Vector3Calc.h"
+#include "MyMath.h"
 #include <assert.h>
 void PlayerBullet::Initialize(Model* model, const Vector3& position, const Vector3& velocity) {
 	assert(model);
@@ -7,9 +7,11 @@ void PlayerBullet::Initialize(Model* model, const Vector3& position, const Vecto
 	model_ = model;
 	worldTransform_.Initialize();
 	worldTransform_.translation_ = position;
+	worldTransform_.UpdateMatrix();
 	velocity_ = velocity;
 	SetCollisionAttribute(CollisionConfig::kCollisionAttributePlayer);
 	SetCollisionMask(~CollisionConfig::kCollisionAttributePlayer);
+	
 }
 
 void PlayerBullet::Updarte() {

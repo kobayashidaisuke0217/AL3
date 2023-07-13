@@ -9,7 +9,7 @@
 class Player : public Collider {
 public:
 	~Player();
-	void Initialize(Model* model, uint32_t textureHandle);
+	void Initialize(Model* model, uint32_t textureHandle, Vector3 pos);
 
 	void Update();
 
@@ -19,7 +19,10 @@ public:
 	void OnCollision() override;
 
 	const std::list<PlayerBullet*>& GetBullets() const { return bullets_; }
-	private:
+	void Setparent(const WorldTransform* parent) { worldTransform_.parent_ = parent; }
+	
+
+private:
 	int count = 0;
 	std::list<PlayerBullet*> bullets_;
 	WorldTransform worldTransform_;

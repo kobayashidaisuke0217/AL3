@@ -12,6 +12,7 @@ GameScene::~GameScene() {
 	delete enemy_;
 	delete collisionManager_;
 	delete skyDomeModel_;
+	delete railCamera_;
 }
 
 void GameScene::Initialize() {
@@ -24,7 +25,8 @@ void GameScene::Initialize() {
 	skyDomeModel_ = Model::CreateFromOBJ("SkyDome", true);
 	viewProjection_.Initialize();
 	player_ = new Player();
-	player_->Initialize(model_, textyreHandle_);
+	Vector3 playerPos(0, 0, 50);
+	player_->Initialize(model_, textyreHandle_,  playerPos);
 	debugCamera_ = new DebugCamera(1280, 720);
 	// 軸方向の表示を有効にする
 	AxisIndicator::GetInstance()->SetVisible(true);
@@ -37,11 +39,15 @@ void GameScene::Initialize() {
 	collisionManager_ = new CollisionManager();
 	skyDome_ = new SkyDome();
 	skyDome_->Initialize(skyDomeModel_);
+	railCamera_ = new RailCamera();
+	railCamera_->Initialize({0.0f, 0.0f, 0.0f}, {0.0f,0.0f,0.0f});
+	player_->Setparent(&railCamera_->GetWorldTransform());
 }
 
 void GameScene::Update() {
 
 	player_->Update();
+	
 	debugCamera_->Update();
 #ifdef _DEBUG
 	if (input_->TriggerKey(DIK_RETURN)) {
@@ -55,7 +61,11 @@ void GameScene::Update() {
 		viewProjection_.matProjection = debugCamera_->GetViewProjection().matProjection;
 		viewProjection_.TransferMatrix();
 	} else {
-		viewProjection_.UpdateMatrix();
+		railCamera_->Update();
+		viewProjection_.matView = railCamera_->GetViewProjection().matView;
+		viewProjection_.matProjection = railCamera_->GetViewProjection().matProjection;
+		viewProjection_.TransferMatrix();
+		/*viewProjection_.UpdateMatrix();*/
 	}
 	enemy_->Update();
 	collisionManager_->ClearColliders();
@@ -70,6 +80,7 @@ void GameScene::Update() {
 	}
 	collisionManager_->CheckAllCollision();
 	skyDome_->Update();
+
 }
 
 void GameScene::Draw() {

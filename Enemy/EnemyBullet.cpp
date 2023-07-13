@@ -1,5 +1,5 @@
 #include "EnemyBullet.h"
-#include "Vector3Calc.h"
+#include "MyMath.h"
 #include <assert.h>
 #include "Player/Player.h"
 void EnemyBullet::Initialize(Model* model, const Vector3& position, const Vector3& velocity) {

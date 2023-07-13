@@ -1,7 +1,7 @@
 #include "Player.h"
 #include <cassert>
 #include "ImGuiManager.h"
-#include"Vector3Calc.h"
+#include"MyMath.h"
 Player::~Player() {
 	for (PlayerBullet* bullet : bullets_) {
 
@@ -14,10 +14,10 @@ void Player::Atack() {
 		if (count == 0) {
 
 			const float KBulletSped = 1.0f;
-			Vector3 velocity(0,0,KBulletSped);
+			Vector3 velocity(0.0f,0.0f,KBulletSped);
 			velocity = TransformNormal(velocity, worldTransform_.matWorld_);
 			PlayerBullet* newBulllet = new PlayerBullet();
-			newBulllet->Initialize(model_, worldTransform_.translation_, velocity);
+			newBulllet->Initialize(model_, GetWorldPos(), velocity);
 			// 弾を登録する
 			bullets_.push_back(newBulllet);
 			count++;
@@ -28,7 +28,7 @@ void Player::Atack() {
 	}
 }
 
-void Player::Initialize(Model* model, uint32_t textureHandle) {
+void Player::Initialize(Model* model, uint32_t textureHandle, Vector3 pos) {
 	assert(model);
 	model_ = model;
 	textureHandle_ = textureHandle;
@@ -37,6 +37,7 @@ void Player::Initialize(Model* model, uint32_t textureHandle) {
 	input_ = Input::GetInstance();
 	SetCollisionAttribute(CollisionConfig::kCollisionAttributePlayer);
 	SetCollisionMask(~CollisionConfig::kCollisionAttributePlayer);
+	worldTransform_.translation_ = Add(worldTransform_.translation_, pos);
 }
 
 void Player::Update() {
