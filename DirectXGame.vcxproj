@@ -113,6 +113,7 @@
     <ClCompile Include="Enemy\EnemyBullet.cpp" />
     <ClCompile Include="Enemy\EnemyState.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Manager\Collider\CollisionManager.cpp" />
     <ClCompile Include="math\matrixCalc.cpp" />
     <ClCompile Include="math\Vector3Calc.cpp" />
     <ClCompile Include="math\WorldTransformEx.cpp" />
@@ -150,6 +151,7 @@
     <ClInclude Include="input\Input.h" />
     <ClInclude Include="Manager\Collider\Collider.h" />
     <ClInclude Include="Manager\Collider\CollisionConfig.h" />
+    <ClInclude Include="Manager\Collider\CollisionManager.h" />
     <ClInclude Include="math\Matrix4x4.h" />
     <ClInclude Include="math\matrixCalc.h" />
     <ClInclude Include="math\Vector2.h" />

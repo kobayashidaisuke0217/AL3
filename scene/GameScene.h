@@ -12,6 +12,7 @@
 #include "ViewProjection.h"
 #include "WorldTransform.h"
 #include "Manager/Collider/CollisionConfig.h"
+#include"Manager/Collider/CollisionManager.h"
 /// <summary>
 /// ゲームシーン
 /// </summary>
@@ -57,10 +58,12 @@ private: // メンバ変数
 	bool isDebugcameraActive_ = false;
 	DebugCamera* debugCamera_ = nullptr;
 	Enemy* enemy_ = nullptr;
+	CollisionManager* collisionManager_;
+
+	
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>
 private:
-	void CheckAllCollision();
-	void CheckCollisionPair(Collider* colliderA, Collider* colliderB);
+	
 };
