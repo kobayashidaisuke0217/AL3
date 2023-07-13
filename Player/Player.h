@@ -4,7 +4,7 @@
 #include "WorldTransform.h"
 #include"PlayerBullet.h"
 #include <list>
-#include "Collider.h"
+#include "Manager/Collider/Collider.h"
 class Player : public Collider {
 public:
 	~Player();

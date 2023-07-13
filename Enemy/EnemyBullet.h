@@ -1,6 +1,6 @@
 #pragma once
 #include "Model.h"
-#include "Collider.h"
+#include "Manager/Collider/Collider.h"
 class Player;
 class EnemyBullet : public Collider {
 public:

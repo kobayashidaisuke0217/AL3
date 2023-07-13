@@ -1,7 +1,7 @@
 #pragma once
 #include "Model.h"
 #include "WorldTransform.h"
-#include "Collider.h"
+#include "Manager/Collider/Collider.h"
 class PlayerBullet : public Collider {
 public:
 	void Initialize(Model* model, const Vector3& position,const Vector3& velocity);

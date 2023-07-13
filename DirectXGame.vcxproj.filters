@@ -224,7 +224,7 @@
     <ClInclude Include="Utility\time\TimeCall.h">
       <Filter>ヘッダー ファイル\utility</Filter>
     </ClInclude>
-    <ClInclude Include="Collider.h">
+    <ClInclude Include="Manager\Collider\Collider.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
