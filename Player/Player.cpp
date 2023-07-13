@@ -35,6 +35,8 @@ void Player::Initialize(Model* model, uint32_t textureHandle) {
 	worldTransform_.Initialize();
 	// シングルトンインスタンスを取得する
 	input_ = Input::GetInstance();
+	SetCollisionAttribute(CollisionConfig::kCollisionAttributePlayer);
+	SetCollisionMask(~CollisionConfig::kCollisionAttributePlayer);
 }
 
 void Player::Update() {

@@ -16,6 +16,8 @@ void EnemyBullet::Initialize(Model* model, const Vector3& position, const Vector
 	float velociteXZ = Length({velocity_.x, 0.0f, velocity_.z});
 	// X軸回り
 	worldTransform_.rotation_.x = std::atan2(-velocity_.y, velociteXZ);
+	SetCollisionAttribute(CollisionConfig::kCollisionAttributeEnemy);
+	SetCollisionMask(~CollisionConfig::kCollisionAttributeEnemy);
 }
 
 void EnemyBullet::Updarte() {

@@ -104,7 +104,7 @@ void GameScene::Draw() {
 
 void GameScene::CheckAllCollision() {
 
-	const std::list<PlayerBullet*>& playerBullets = player_->GetBullets();
+	/*const std::list<PlayerBullet*>& playerBullets = player_->GetBullets();
 	const std::list<EnemyBullet*>& enemyBullets = enemy_->GetBullets();
 #pragma region 自キャラと敵弾の当たり判定
 
@@ -126,10 +126,34 @@ void GameScene::CheckAllCollision() {
 			CheckCollisionPair(eBullet, pbullet);
 		}
 	}
-#pragma endregion
+#pragma endregion*/
+	std::list<Collider*> colliders_;
+
+	colliders_.push_back(player_);
+	colliders_.push_back(enemy_);
+	for (PlayerBullet* pBullet : player_->GetBullets()) {
+		colliders_.push_back(pBullet);
+	}
+	for (EnemyBullet* eBullet : enemy_->GetBullets()) {
+		colliders_.push_back(eBullet);
+	}
+	std::list<Collider*>::iterator itrA = colliders_.begin();
+	for (; itrA != colliders_.end(); ++itrA) {
+		
+		std::list<Collider*>::iterator itrB = itrA;
+		++itrB;
+		for (; itrB != colliders_.end(); ++itrB) {
+		
+		CheckCollisionPair(*(itrA), *(itrB));
+		}
+	}
 }
 
 void GameScene::CheckCollisionPair(Collider* colliderA, Collider* colliderB) {
+	if (!(colliderA->GetCollisionAttribute()&colliderB->GetCollisionMask()) ||
+	    !(colliderB->GetCollisionAttribute() & colliderA->GetCollisionMask())) {
+ 		return;
+	}
 	Vector3 posA = colliderA->GetWorldPos();
 	Vector3 posB = colliderB->GetWorldPos();
 	float radA = colliderA->Getradius();

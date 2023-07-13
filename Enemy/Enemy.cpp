@@ -21,7 +21,8 @@ void Enemy::Initialize(Model* model, const Vector3& position, const Vector3& vel
 	velocity_ = velocity;
 	state_ = new EnemyStateApproach();
 	state_->Initialize(this);
-
+	SetCollisionAttribute(CollisionConfig::kCollisionAttributeEnemy);
+	SetCollisionMask(~CollisionConfig::kCollisionAttributeEnemy);
 }
 
 void Enemy::Update() {

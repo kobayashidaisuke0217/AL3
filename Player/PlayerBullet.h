@@ -2,6 +2,7 @@
 #include "Model.h"
 #include "WorldTransform.h"
 #include "Manager/Collider/Collider.h"
+#include "CollisionConfig.h"
 class PlayerBullet : public Collider {
 public:
 	void Initialize(Model* model, const Vector3& position,const Vector3& velocity);
