@@ -13,6 +13,7 @@
 #include "WorldTransform.h"
 #include "Manager/Collider/CollisionConfig.h"
 #include"Manager/Collider/CollisionManager.h"
+#include "SkyDome.h"
 /// <summary>
 /// ゲームシーン
 /// </summary>
@@ -51,6 +52,7 @@ private: // メンバ変数
 
 	uint32_t textyreHandle_ = 0;
 	Model* model_ = nullptr;
+	Model* skyDomeModel_=nullptr;
 	ViewProjection viewProjection_;
 
 	Player* player_ = nullptr;
@@ -59,7 +61,7 @@ private: // メンバ変数
 	DebugCamera* debugCamera_ = nullptr;
 	Enemy* enemy_ = nullptr;
 	CollisionManager* collisionManager_;
-
+	SkyDome* skyDome_;
 	
 	/// <summary>
 	/// ゲームシーン用

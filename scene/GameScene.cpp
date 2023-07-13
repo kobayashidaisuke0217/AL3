@@ -11,6 +11,7 @@ GameScene::~GameScene() {
 	delete debugCamera_;
 	delete enemy_;
 	delete collisionManager_;
+	delete skyDomeModel_;
 }
 
 void GameScene::Initialize() {
@@ -20,6 +21,7 @@ void GameScene::Initialize() {
 	audio_ = Audio::GetInstance();
 	textyreHandle_ = TextureManager::Load("sample.png");
 	model_ = Model::Create();
+	skyDomeModel_ = Model::CreateFromOBJ("SkyDome", true);
 	viewProjection_.Initialize();
 	player_ = new Player();
 	player_->Initialize(model_, textyreHandle_);
@@ -33,6 +35,8 @@ void GameScene::Initialize() {
 	enemy_->Initialize(model_, {14, 0, 40}, {0, 0, -0.5});
 	
 	collisionManager_ = new CollisionManager();
+	skyDome_ = new SkyDome();
+	skyDome_->Initialize(skyDomeModel_);
 }
 
 void GameScene::Update() {
@@ -65,6 +69,7 @@ void GameScene::Update() {
 		collisionManager_->AddCollider(eBullet);
 	}
 	collisionManager_->CheckAllCollision();
+	skyDome_->Update();
 }
 
 void GameScene::Draw() {
@@ -97,6 +102,7 @@ void GameScene::Draw() {
 		enemy_->Draw(viewProjection_);
 	}
 	player_->Draw(viewProjection_);
+	skyDome_->Draw(viewProjection_);
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
 #pragma endregion

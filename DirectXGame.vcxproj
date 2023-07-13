@@ -120,6 +120,7 @@
     <ClCompile Include="Player\Player.cpp" />
     <ClCompile Include="Player\PlayerBullet.cpp" />
     <ClCompile Include="scene\GameScene.cpp" />
+    <ClCompile Include="SkyDome.cpp" />
     <ClCompile Include="Utility\time\TimeCall.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -161,6 +162,7 @@
     <ClInclude Include="Player\Player.h" />
     <ClInclude Include="Player\PlayerBullet.h" />
     <ClInclude Include="scene\GameScene.h" />
+    <ClInclude Include="SkyDome.h" />
     <ClInclude Include="Utility\time\TimeCall.h" />
   </ItemGroup>
   <ItemGroup>
