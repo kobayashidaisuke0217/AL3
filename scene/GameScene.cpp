@@ -11,6 +11,7 @@ GameScene::~GameScene() {
 	delete debugCamera_;
 	delete enemy_;
 	delete collisionManager_;
+	delete skyDome_;
 	delete skyDomeModel_;
 	delete railCamera_;
 }
@@ -25,7 +26,7 @@ void GameScene::Initialize() {
 	skyDomeModel_ = Model::CreateFromOBJ("SkyDome", true);
 	viewProjection_.Initialize();
 	player_ = new Player();
-	Vector3 playerPos(0, 0, 50);
+	Vector3 playerPos(0, 0, 30);
 	player_->Initialize(model_, textyreHandle_,  playerPos);
 	debugCamera_ = new DebugCamera(1280, 720);
 	// 軸方向の表示を有効にする

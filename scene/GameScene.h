@@ -14,7 +14,7 @@
 #include "Manager/Collider/CollisionConfig.h"
 #include"Manager/Collider/CollisionManager.h"
 #include "SkyDome.h"
-#include "RailCamera.h"
+#include "Manager/camera/RailCamera.h"
 /// <summary>
 /// ゲームシーン
 /// </summary>
