@@ -6,6 +6,7 @@
 #include "EnemyBullet.h"
 #include "Manager/Collider/Collider.h"
 #include "Manager/Collider/CollisionConfig.h"
+class GameScene;
 class Player;
 class EnemyState;
 class Enemy:public Collider {
@@ -31,7 +32,10 @@ public:
 	int32_t fireTimer;
 	void SetPlayer(Player* player) { player_ = player; }
 	
-	const std::list<EnemyBullet*>& GetBullets() const { return bullets_; }
+	//const std::list<EnemyBullet*>& GetBullets() const { return bullets_; }
+
+	void SetGameScene(GameScene* gameScene) { gameScene_ = gameScene; }
+	bool isDead() const { return isDead_; }
 
 private:
 	EnemyState* state_;
@@ -39,8 +43,9 @@ private:
 	Model* model_;
 	uint32_t texturehandle_;
 	Vector3 velocity_;
-
-	 std::list<EnemyBullet*> bullets_;
+	bool isDead_ = false;
+	/* std::list<EnemyBullet*> bullets_;*/
 	
 	Player* player_ = nullptr;
+	 GameScene* gameScene_ = nullptr;
 };

@@ -1,12 +1,10 @@
 #include "Enemy.h"
 #include <assert.h>
 #include "Player/Player.h"
+#include "scene/GameScene.h"
 Enemy::Enemy() {}
 Enemy::~Enemy() { 
-	for (EnemyBullet* bullet : bullets_) {
-
-		delete bullet;
-	}
+	
 	delete state_; 
 	
 }
@@ -27,13 +25,13 @@ void Enemy::Initialize(Model* model, const Vector3& position, const Vector3& vel
 
 void Enemy::Update() {
 
-	bullets_.remove_if([](EnemyBullet* bullet) {
+	/*bullets_.remove_if([](EnemyBullet* bullet) {
 		if (bullet->isDead()) {
 			delete bullet;
 			return true;
 		}
 		return false;
-	});
+	});*/
 
 	worldTransform_.UpdateMatrix();
 
@@ -41,21 +39,18 @@ void Enemy::Update() {
 	
 	
 
-	for (EnemyBullet* bullet : bullets_) {
+	/*for (EnemyBullet* bullet : bullets_) {
 
 		bullet->Updarte();
 	}
-	
+	*/
 
 	
 }
 
 void Enemy::Draw(const ViewProjection& view) {
 	
-	for (EnemyBullet* bullet : bullets_) {
-
-		bullet->Draw(view);
-	}
+	
 	model_->Draw(worldTransform_, view, texturehandle_);
 }
 
@@ -88,12 +83,12 @@ void Enemy::Fire() {
 	newBullet->SetPlayer(player_);
 	//生成と初期化
 	newBullet->Initialize(model_, worldTransform_.translation_,velocity);
-	bullets_.push_back(newBullet);
-
+	
+	gameScene_->AddEnemyBullet(newBullet);
 
 }
 
-void Enemy::OnCollision() {}
+void Enemy::OnCollision() { isDead_ = true; }
 
 Vector3 Enemy::GetWorldPos() {
 	Vector3 worldPos;

@@ -46,6 +46,8 @@ public: // メンバ関数
 	/// </summary>
 	void Draw();
 
+	void AddEnemyBullet(EnemyBullet* enemyBullet);
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
@@ -60,10 +62,12 @@ private: // メンバ変数
 	// デバッグカメラ有効
 	bool isDebugcameraActive_ = false;
 	DebugCamera* debugCamera_ = nullptr;
-	Enemy* enemy_ = nullptr;
+	std::list<Enemy*> enemys_;
+	//Enemy* enemy_ = nullptr;
 	CollisionManager* collisionManager_;
 	SkyDome* skyDome_;
 	RailCamera* railCamera_;
+	std::list<EnemyBullet*> enemyBullets_;
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>

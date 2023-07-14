@@ -9,11 +9,17 @@ GameScene::~GameScene() {
 	delete model_;
 	delete player_;
 	delete debugCamera_;
-	delete enemy_;
+	for (Enemy* enemy : enemys_) {
+		delete enemy;
+	}
 	delete collisionManager_;
 	delete skyDome_;
 	delete skyDomeModel_;
 	delete railCamera_;
+	for (EnemyBullet* bullet : enemyBullets_) {
+
+		delete bullet;
+	}
 }
 
 void GameScene::Initialize() {
@@ -33,10 +39,12 @@ void GameScene::Initialize() {
 	AxisIndicator::GetInstance()->SetVisible(true);
 	AxisIndicator::GetInstance()->SetTargetViewProjection(&viewProjection_);
 	
-	enemy_ = new Enemy();
-	enemy_->SetPlayer(player_);
-	enemy_->Initialize(model_, {14, 0, 40}, {0, 0, -0.5});
+	Enemy* enemy = new Enemy();
+	enemy->SetPlayer(player_);
+	enemy->SetGameScene(this);
+	enemy->Initialize(model_, {14, 0, 40}, {0, 0, -0.5});
 	
+	enemys_.push_back(enemy);
 	collisionManager_ = new CollisionManager();
 	skyDome_ = new SkyDome();
 	skyDome_->Initialize(skyDomeModel_);
@@ -67,16 +75,40 @@ void GameScene::Update() {
 		viewProjection_.matProjection = railCamera_->GetViewProjection().matProjection;
 		viewProjection_.TransferMatrix();
 		/*viewProjection_.UpdateMatrix();*/
+		
 	}
-	enemy_->Update();
+	enemys_.remove_if([](Enemy* enemy) {
+		if (enemy->isDead()) {
+			delete enemy;
+			return true;
+		}
+		return false;
+	});
+	for (Enemy* enemy : enemys_) {
+		enemy->Update();
+	}
+	enemyBullets_.remove_if([](EnemyBullet* bullet) {
+		if (bullet->isDead()) {
+			delete bullet;
+			return true;
+		}
+		return false;
+	});
+	for (EnemyBullet* bullet : enemyBullets_) {
+
+		bullet->Updarte();
+	}
+	
+
 	collisionManager_->ClearColliders();
 	collisionManager_->AddCollider(player_);
-	collisionManager_->AddCollider(enemy_);
-	
+	for (Enemy* enemy : enemys_) {
+		collisionManager_->AddCollider(enemy);
+	}
 	for (PlayerBullet* pBullet : player_->GetBullets()) {
 		collisionManager_->AddCollider(pBullet);
 	}
-	for (EnemyBullet* eBullet : enemy_->GetBullets()) {
+	for (EnemyBullet* eBullet : enemyBullets_) {
 		collisionManager_->AddCollider(eBullet);
 	}
 	collisionManager_->CheckAllCollision();
@@ -110,8 +142,12 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
-	if (enemy_) {
-		enemy_->Draw(viewProjection_);
+	for (Enemy* enemy : enemys_) {
+		enemy->Draw(viewProjection_);
+	}
+	for (EnemyBullet* bullet : enemyBullets_) {
+
+		bullet->Draw(viewProjection_);
 	}
 	player_->Draw(viewProjection_);
 	skyDome_->Draw(viewProjection_);
@@ -132,4 +168,6 @@ void GameScene::Draw() {
 
 #pragma endregion
 }
+
+void GameScene::AddEnemyBullet(EnemyBullet* enemyBullet) { enemyBullets_.push_back(enemyBullet); }
 
