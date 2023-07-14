@@ -43,6 +43,8 @@ void GameScene::Initialize() {
 	railCamera_ = new RailCamera();
 	railCamera_->Initialize({0.0f, 0.0f, 0.0f}, {0.0f,0.0f,0.0f});
 	player_->Setparent(&railCamera_->GetWorldTransform());
+	Spline_ = new CatmullRomSpline();
+	Spline_->Initialize(&viewProjection_);
 }
 
 void GameScene::Update() {
@@ -81,7 +83,7 @@ void GameScene::Update() {
 	}
 	collisionManager_->CheckAllCollision();
 	skyDome_->Update();
-
+	Spline_->Update();
 }
 
 void GameScene::Draw() {
@@ -115,10 +117,12 @@ void GameScene::Draw() {
 	}
 	player_->Draw(viewProjection_);
 	skyDome_->Draw(viewProjection_);
+
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
 #pragma endregion
 
+	Spline_->Draw();
 #pragma region 前景スプライト描画
 	// 前景スプライト描画前処理
 	Sprite::PreDraw(commandList);

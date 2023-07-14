@@ -15,6 +15,7 @@
 #include"Manager/Collider/CollisionManager.h"
 #include "SkyDome.h"
 #include "Manager/camera/RailCamera.h"
+#include "CatmullRomSpline.h"
 /// <summary>
 /// ゲームシーン
 /// </summary>
@@ -64,6 +65,7 @@ private: // メンバ変数
 	CollisionManager* collisionManager_;
 	SkyDome* skyDome_;
 	RailCamera* railCamera_;
+	CatmullRomSpline* Spline_;
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>
