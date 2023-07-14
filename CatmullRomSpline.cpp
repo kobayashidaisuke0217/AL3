@@ -23,36 +23,7 @@ void CatmullRomSpline::Update() {
 		pointsDrawing_.push_back(pos);
 	
 	}
-	//for (size_t i = 0; i < pointCount_+1; i++) {
-	//	float t = 1.0f / pointCount_ * i;
-	//	Vector3 pos = Catmull_Rom(controlPoints_[0], controlPoints_[0], controlPoints_[1], controlPoints_[2], t);
-	//	pointsDrawing_.push_back(pos);
-	//}
-	//for (size_t i = 0; i < pointCount_ + 1; i++) {
-	//	float t = 1.0f / pointCount_ * i;
-	//	Vector3 pos = Catmull_Rom(
-	//	    controlPoints_[0], controlPoints_[1], controlPoints_[2], controlPoints_[3], t);
-	//	pointsDrawing_.push_back(pos);
-	//}
-	//for (size_t i = 0; i < pointCount_ + 1; i++) {
-	//	float t = 1.0f / pointCount_ * i;
-	//	Vector3 pos = Catmull_Rom(
-	//	    controlPoints_[1], controlPoints_[2], controlPoints_[3], controlPoints_[4], t);
-	//	pointsDrawing_.push_back(pos);
-	//}
-	//for (size_t i = 0; i < pointCount_ + 1; i++) {
-	//	float t = 1.0f / pointCount_ * i;
-	//	Vector3 pos = Catmull_Rom(
-	//	    controlPoints_[2], controlPoints_[3], controlPoints_[4], controlPoints_[5], t);
-	//	pointsDrawing_.push_back(pos);
-	//}
-	//for (size_t i = 0; i < pointCount_ + 1; i++) {
-	//	float t = 1.0f / pointCount_ * i;
-	//	Vector3 pos = Catmull_Rom(
-	//	    controlPoints_[3], controlPoints_[4], controlPoints_[5], controlPoints_[5], t);
-	//	pointsDrawing_.push_back(pos);
-	//}
-
+	
 }
 
 void CatmullRomSpline::Draw() {
