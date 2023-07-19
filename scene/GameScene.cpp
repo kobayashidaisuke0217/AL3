@@ -170,7 +170,7 @@ void GameScene::Draw() {
 void GameScene::AddEnemyBullet(EnemyBullet* enemyBullet) { enemyBullets_.push_back(enemyBullet); }
 
 void GameScene::EnemyPopData() { std::ifstream file;
-	file.open("Resources/enemyPop.csv");
+	file.open("Resources/csv/enemyPop.csv");
 	assert(file.is_open());
 
 	enemyPopCommands << file.rdbuf();
