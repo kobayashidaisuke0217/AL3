@@ -15,6 +15,7 @@
 #include"Manager/Collider/CollisionManager.h"
 #include "SkyDome.h"
 #include "Manager/camera/RailCamera.h"
+#include <sstream>
 /// <summary>
 /// ゲームシーン
 /// </summary>
@@ -68,9 +69,14 @@ private: // メンバ変数
 	SkyDome* skyDome_;
 	RailCamera* railCamera_;
 	std::list<EnemyBullet*> enemyBullets_;
+	std::stringstream enemyPopCommands;
+	bool enemyPopWait;
+	int32_t enemyPopWaitTimer;
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>
 private:
-	
+	void EnemyPopData();
+	void UpdateEnemyPopCommands();
+	void EnemySpawn(Vector3 pos,Vector3 velocity);
 };

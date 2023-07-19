@@ -2,6 +2,7 @@
 #include "AxisIndicator.h"
 #include "TextureManager.h"
 #include <cassert>
+#include<fstream>
 
 GameScene::GameScene() {}
 
@@ -39,22 +40,19 @@ void GameScene::Initialize() {
 	AxisIndicator::GetInstance()->SetVisible(true);
 	AxisIndicator::GetInstance()->SetTargetViewProjection(&viewProjection_);
 	
-	Enemy* enemy = new Enemy();
-	enemy->SetPlayer(player_);
-	enemy->SetGameScene(this);
-	enemy->Initialize(model_, {14, 0, 40}, {0, 0, -0.5});
-	
-	enemys_.push_back(enemy);
+
+	EnemySpawn({14.0f, 0.0f, 40.0f}, {0.0f, 0.0f, -0.5f});
 	collisionManager_ = new CollisionManager();
 	skyDome_ = new SkyDome();
 	skyDome_->Initialize(skyDomeModel_);
 	railCamera_ = new RailCamera();
 	railCamera_->Initialize({0.0f, 0.0f, 0.0f}, {0.0f,0.0f,0.0f});
 	player_->Setparent(&railCamera_->GetWorldTransform());
+	EnemyPopData();
 }
 
 void GameScene::Update() {
-
+	UpdateEnemyPopCommands();
 	player_->Update();
 	
 	debugCamera_->Update();
@@ -113,7 +111,7 @@ void GameScene::Update() {
 	}
 	collisionManager_->CheckAllCollision();
 	skyDome_->Update();
-
+	
 }
 
 void GameScene::Draw() {
@@ -170,4 +168,63 @@ void GameScene::Draw() {
 }
 
 void GameScene::AddEnemyBullet(EnemyBullet* enemyBullet) { enemyBullets_.push_back(enemyBullet); }
+
+void GameScene::EnemyPopData() { std::ifstream file;
+	file.open("Resources/enemyPop.csv");
+	assert(file.is_open());
+
+	enemyPopCommands << file.rdbuf();
+
+	file.close();
+}
+
+void GameScene::UpdateEnemyPopCommands() { 
+	if (enemyPopWait == true) {
+		enemyPopWaitTimer--;
+		if (enemyPopWaitTimer <= 0) {
+			enemyPopWait = false;
+		}
+		return;
+	}
+	std::string line;
+
+while (getline(enemyPopCommands,line)) {
+		std::istringstream line_stream(line);
+		std::string word;
+		getline(line_stream, word, ',');
+		if (word.find("//") == 0) {
+
+			continue;
+		}
+		if (word.find("POP") == 0) {
+			getline(line_stream, word, ',');
+			float x = (float)std::atof(word.c_str());
+
+			getline(line_stream, word, ',');
+			float y = (float)std::atof(word.c_str());
+
+			getline(line_stream, word, ',');
+			float z = (float)std::atof(word.c_str());
+			EnemySpawn({x, y, z}, {0.0f, 0.0f, -0.5f});
+		} else if (word.find("WAIT") == 0) {
+			getline(line_stream, word, ',');
+
+			int32_t waitTime = atoi(word.c_str());
+			enemyPopWait = true;
+			enemyPopWaitTimer = waitTime;
+
+			break;
+
+		}
+	}
+}
+
+void GameScene::EnemySpawn(Vector3 pos,Vector3 velocity) {
+	Enemy* enemy = new Enemy();
+	enemy->SetPlayer(player_);
+	enemy->SetGameScene(this);
+	enemy->Initialize(model_, pos, velocity);
+
+	enemys_.push_back(enemy);
+}
 
