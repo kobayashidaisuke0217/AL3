@@ -15,7 +15,9 @@ void Player::Atack() {
 
 			const float KBulletSped = 1.0f;
 			Vector3 velocity(0.0f,0.0f,KBulletSped);
-			velocity = TransformNormal(velocity, worldTransform_.matWorld_);
+			//velocity = TransformNormal(velocity, worldTransform_.matWorld_);
+			velocity = Subtract(worldtransform3Dreticle_.translation_, GetWorldPos());
+			velocity = Multiply(KBulletSped, Normalise(velocity));
 			PlayerBullet* newBulllet = new PlayerBullet();
 			newBulllet->Initialize(model_, GetWorldPos(), velocity);
 			// 弾を登録する
@@ -38,6 +40,7 @@ void Player::Initialize(Model* model, uint32_t textureHandle, Vector3 pos) {
 	SetCollisionAttribute(CollisionConfig::kCollisionAttributePlayer);
 	SetCollisionMask(~CollisionConfig::kCollisionAttributePlayer);
 	worldTransform_.translation_ = Add(worldTransform_.translation_, pos);
+	worldtransform3Dreticle_.Initialize();
 }
 
 void Player::Update() {
@@ -110,6 +113,14 @@ void Player::Update() {
 	
 	bullet->Updarte();
 	}
+	const float kDistancePlayerTo3DReticle = 50.0f;
+	Vector3 offset = {0, 0, 1.0f};
+
+	offset = TransformNormal(offset,worldTransform_.matWorld_);
+	offset = Multiply(kDistancePlayerTo3DReticle, Normalise(offset));
+
+	worldtransform3Dreticle_.translation_ = Add(GetWorldPos(), offset);
+	worldtransform3Dreticle_.UpdateMatrix();
 }
 void Player::Draw(ViewProjection view) {
 	model_->Draw(worldTransform_, view, textureHandle_);
@@ -117,6 +128,7 @@ void Player::Draw(ViewProjection view) {
 
 	bullet->Draw(view);
 	}
+	model_->Draw(worldtransform3Dreticle_, view, textureHandle_);
 }
 
 Vector3 Player::GetWorldPos() { 
