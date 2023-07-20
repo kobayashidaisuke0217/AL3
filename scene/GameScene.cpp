@@ -29,6 +29,7 @@ void GameScene::Initialize() {
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
 	textyreHandle_ = TextureManager::Load("sample.png");
+	TextureManager::Load("Reticle.png");
 	model_ = Model::Create();
 	skyDomeModel_ = Model::CreateFromOBJ("SkyDome", true);
 	viewProjection_.Initialize();
@@ -53,7 +54,7 @@ void GameScene::Initialize() {
 
 void GameScene::Update() {
 	UpdateEnemyPopCommands();
-	player_->Update();
+	player_->Update(viewProjection_);
 	
 	debugCamera_->Update();
 #ifdef _DEBUG
@@ -123,6 +124,7 @@ void GameScene::Draw() {
 	// 背景スプライト描画前処理
 	Sprite::PreDraw(commandList);
 
+	
 	/// <summary>
 	/// ここに背景スプライトの描画処理を追加できる
 	/// </summary>
@@ -156,7 +158,7 @@ void GameScene::Draw() {
 #pragma region 前景スプライト描画
 	// 前景スプライト描画前処理
 	Sprite::PreDraw(commandList);
-
+	player_->DrawUI();
 	/// <summary>
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>

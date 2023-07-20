@@ -7,6 +7,7 @@ Player::~Player() {
 
 		delete bullet;
 	}
+	delete sprite2DReticle_;
 }
 
 void Player::Atack() {
@@ -41,9 +42,14 @@ void Player::Initialize(Model* model, uint32_t textureHandle, Vector3 pos) {
 	SetCollisionMask(~CollisionConfig::kCollisionAttributePlayer);
 	worldTransform_.translation_ = Add(worldTransform_.translation_, pos);
 	worldtransform3Dreticle_.Initialize();
+
+	uint32_t textureReticle = TextureManager::Load("Reticle.png");
+
+	sprite2DReticle_ =
+	    Sprite::Create(textureReticle, {640.0f, 360.0f}, {1.0f, 1.0f, 1.0f, 1.0f}, {0.5f, 0.5f});
 }
 
-void Player::Update() {
+void Player::Update(const ViewProjection view) {
 	// デスフラグの立った弾を削除
 	bullets_.remove_if([](PlayerBullet* bullet) {
 		if (bullet->isDead()) {
@@ -121,14 +127,28 @@ void Player::Update() {
 
 	worldtransform3Dreticle_.translation_ = Add(GetWorldPos(), offset);
 	worldtransform3Dreticle_.UpdateMatrix();
+	
+	Vector3 positionReticle = worldtransform3Dreticle_.translation_;
+	
+	Matrix4x4 matViewport =
+	    MakeViewportMatrix(0, 0, WinApp::kWindowWidth, WinApp::kWindowHeight, 0, 1);
+	
+	Matrix4x4 matViewProjectionViewport =
+	    Multiply(Multiply(view.matView, view.matProjection), matViewport);
+	positionReticle = Transform(positionReticle, matViewProjectionViewport);
+	sprite2DReticle_->SetPosition({positionReticle.x, positionReticle.y});
 }
-void Player::Draw(ViewProjection view) {
+void Player::Draw(const ViewProjection view) {
 	model_->Draw(worldTransform_, view, textureHandle_);
 	for (PlayerBullet* bullet : bullets_) {
 
 	bullet->Draw(view);
 	}
-	model_->Draw(worldtransform3Dreticle_, view, textureHandle_);
+	//model_->Draw(worldtransform3Dreticle_, view, textureHandle_);
+}
+
+void Player::DrawUI() { sprite2DReticle_->Draw();
+
 }
 
 Vector3 Player::GetWorldPos() { 

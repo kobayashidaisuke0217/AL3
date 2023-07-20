@@ -6,15 +6,16 @@
 #include <list>
 #include "Manager/Collider/Collider.h"
 #include "Manager/Collider/CollisionConfig.h"
+#include <Sprite.h>
 class Player : public Collider {
 public:
 	~Player();
 	void Initialize(Model* model, uint32_t textureHandle, Vector3 pos);
 
-	void Update();
+	void Update(const ViewProjection view);
 
-	void Draw(ViewProjection view);
-	
+	void Draw(const ViewProjection view);
+	void DrawUI();
 	Vector3 GetWorldPos() override;
 	void OnCollision() override;
 
@@ -33,5 +34,6 @@ private:
 	Input* input_ = nullptr;
 	WorldTransform worldtransform3Dreticle_;
 
+	Sprite* sprite2DReticle_ = nullptr;
 	void Atack();
 };
