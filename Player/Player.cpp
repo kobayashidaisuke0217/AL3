@@ -17,7 +17,11 @@ void Player::Atack() {
 			const float KBulletSped = 1.0f;
 			Vector3 velocity(0.0f,0.0f,KBulletSped);
 			//velocity = TransformNormal(velocity, worldTransform_.matWorld_);
-			velocity = Subtract(worldtransform3Dreticle_.translation_, GetWorldPos());
+			velocity = Subtract(
+			    {worldtransform3Dreticle_.matWorld_.m[3][0],
+			     worldtransform3Dreticle_.matWorld_.m[3][1],
+			     worldtransform3Dreticle_.matWorld_.m[3][2]},
+			    GetWorldPos());
 			velocity = Multiply(KBulletSped, Normalise(velocity));
 			PlayerBullet* newBulllet = new PlayerBullet();
 			newBulllet->Initialize(model_, GetWorldPos(), velocity);
@@ -128,15 +132,17 @@ void Player::Update(const ViewProjection view) {
 	worldtransform3Dreticle_.translation_ = Add(GetWorldPos(), offset);
 	worldtransform3Dreticle_.UpdateMatrix();
 	
-	Vector3 positionReticle = worldtransform3Dreticle_.translation_;
+	Vector3 positionReticle = {
+	    worldtransform3Dreticle_.matWorld_.m[3][0], worldtransform3Dreticle_.matWorld_.m[3][1],
+	    worldtransform3Dreticle_.matWorld_.m[3][2]};
 	
 	Matrix4x4 matViewport =
-	    MakeViewportMatrix(0, 0, WinApp::kWindowWidth, WinApp::kWindowHeight, 0, 1);
+	    MakeViewportMatrix(0.0f, 0.0f, WinApp::kWindowWidth, WinApp::kWindowHeight, 0.0f, 1.0f);
 	
 	Matrix4x4 matViewProjectionViewport =
 	    Multiply(Multiply(view.matView, view.matProjection), matViewport);
 	positionReticle = Transform(positionReticle, matViewProjectionViewport);
-	sprite2DReticle_->SetPosition({positionReticle.x, positionReticle.y});
+	sprite2DReticle_->SetPosition(Vector2(positionReticle.x, positionReticle.y));
 }
 void Player::Draw(const ViewProjection view) {
 	model_->Draw(worldTransform_, view, textureHandle_);
