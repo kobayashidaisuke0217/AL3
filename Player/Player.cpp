@@ -20,7 +20,7 @@ void Player::Atack() {
 			velocity = Subtract(
 			    {worldtransform3Dreticle_.matWorld_.m[3][0],
 			     worldtransform3Dreticle_.matWorld_.m[3][1],
-			     worldtransform3Dreticle_.matWorld_.m[3][2]},
+			     worldtransform3Dreticle_.matWorld_.m[3][2]}/*worldtransform3Dreticle_.translation_*/,
 			    GetWorldPos());
 			velocity = Multiply(KBulletSped, Normalise(velocity));
 			PlayerBullet* newBulllet = new PlayerBullet();
@@ -134,7 +134,7 @@ void Player::Update(const ViewProjection view) {
 	
 	Vector3 positionReticle = {
 	    worldtransform3Dreticle_.matWorld_.m[3][0], worldtransform3Dreticle_.matWorld_.m[3][1],
-	    worldtransform3Dreticle_.matWorld_.m[3][2]};
+	    worldtransform3Dreticle_.matWorld_.m[3][2]}/*worldtransform3Dreticle_.translation_*/;
 	
 	Matrix4x4 matViewport =
 	    MakeViewportMatrix(0.0f, 0.0f, WinApp::kWindowWidth, WinApp::kWindowHeight, 0.0f, 1.0f);
