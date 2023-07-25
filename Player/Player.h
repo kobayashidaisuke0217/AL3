@@ -36,4 +36,5 @@ private:
 
 	Sprite* sprite2DReticle_ = nullptr;
 	void Atack();
+	void Setreticle(const ViewProjection view);
 };

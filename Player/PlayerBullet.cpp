@@ -20,6 +20,9 @@ void PlayerBullet::Updarte() {
 	if (--deathTimer_ <= 0) {
 		isDead_ = true;
 	}
+	if (isDead_ == true) {
+		delete this;
+	}
 }
 
 void PlayerBullet::Draw(const ViewProjection& view) {
