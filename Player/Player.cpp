@@ -242,7 +242,7 @@ void Player::Draw(const ViewProjection view) {
 
 	bullet->Draw(view);
 	}
-	//model_->Draw(worldtransform3Dreticle_, view, textureHandle_);
+	model_->Draw(worldtransform3Dreticle_, view, textureHandle_);
 }
 
 void Player::DrawUI() { sprite2DReticle_->Draw();
