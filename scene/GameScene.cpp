@@ -117,12 +117,12 @@ void GameScene::Draw() {
 	}
 	player_->Draw(viewProjection_);
 	skyDome_->Draw(viewProjection_);
-
+	Spline_->Draw();
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
 #pragma endregion
 
-	Spline_->Draw();
+	
 #pragma region 前景スプライト描画
 	// 前景スプライト描画前処理
 	Sprite::PreDraw(commandList);

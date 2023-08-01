@@ -17,12 +17,12 @@ void CatmullRomSpline::Initialize(ViewProjection* view) {
 }
 
 void CatmullRomSpline::Update() {
-	for (size_t i = 0; i < pointCount_ + 1; i++) {
+	/*for (size_t i = 0; i < pointCount_ + 1; i++) {
 		float t = 1.0f / pointCount_ * i;
 		Vector3 pos = Catmull_Rom(controlPoints_, t);
 		pointsDrawing_.push_back(pos);
 	
-	}
+	}*/
 	
 }
 
