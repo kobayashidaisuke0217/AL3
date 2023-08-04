@@ -44,7 +44,7 @@ void GameScene::Initialize() {
 	railCamera_->Initialize({0.0f, 0.0f, 0.0f}, {0.0f,0.0f,0.0f});
 	player_->Setparent(&railCamera_->GetWorldTransform());
 	Spline_ = new CatmullRomSpline();
-	Spline_->Initialize(&viewProjection_);
+	Spline_->Initialize(viewProjection_);
 }
 
 void GameScene::Update() {
@@ -117,10 +117,11 @@ void GameScene::Draw() {
 	}
 	player_->Draw(viewProjection_);
 	skyDome_->Draw(viewProjection_);
-	Spline_->Draw();
 	
+		Spline_->Draw();
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
+
 #pragma endregion
 
 	

@@ -5,7 +5,7 @@
 #include "ViewProjection.h"
 class CatmullRomSpline {
 public:
-	void Initialize(ViewProjection*view);
+	void Initialize(const ViewProjection& view);
 
 	void Update();
 

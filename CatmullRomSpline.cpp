@@ -1,6 +1,6 @@
 #include "CatmullRomSpline.h"
 
-void CatmullRomSpline::Initialize(ViewProjection* view) {
+void CatmullRomSpline::Initialize(const ViewProjection& view) {
 	controlPoints_ = {
 	    {0, 0, 0,},
 		{10, 10, 0},
@@ -11,8 +11,13 @@ void CatmullRomSpline::Initialize(ViewProjection* view) {
 
 	};
 	pointCount_ = 100;
+	primitiveDrawer_->GetInstance()->SetViewProjection(&view);
+}
+
+void CatmullRomSpline::Update() {
 	
-	primitiveDrawer_->GetInstance()->SetViewProjection(view);
+		
+	
 	for (size_t i = 0; i < pointCount_ + 1; i++) {
 		float t = 1.0f / pointCount_ * i;
 		Vector3 pos = Catmull_Rom(controlPoints_, t);
@@ -20,13 +25,8 @@ void CatmullRomSpline::Initialize(ViewProjection* view) {
 	}
 }
 
-void CatmullRomSpline::Update() {
-	
-	
-}
-
 void CatmullRomSpline::Draw() {
-	for (uint32_t i = 0; i < pointsDrawing_.size()-1; i++) {
+	for (uint32_t i = 0; i < pointCount_-1; i++) {
 		
 		PrimitiveDrawer::GetInstance()->DrawLine3d(
 		    pointsDrawing_[i], pointsDrawing_[i+1], { 1.0f, 0.0f, 0.0f, 1.0f });
@@ -34,23 +34,31 @@ void CatmullRomSpline::Draw() {
 
 }
 
-Vector3 CatmullRomSpline::Catmull_Rom(std::vector<Vector3> points, float t) {
-	int p1, p2, p3, p0;
-	p1 = (int)t + 1;
-	p2 = p1 + 1;
-	p3 = p2 + 1;
-	p0 = p1 - 1;
-	t = t - (int)t;
-	return {
-	    0.5f * ((-points[p0].x + 3 * points[p1].x - 3 * points[p2].x + points[p3].x) * (t * t * t) +
-	            (2 * points[p0].x - 5 * points[p1].x + 4 * points[p2].x - points[p3].x) * (t * t) +
-	            (-points[p0].x + points[p2].x) * t + 2 * points[p1].x),
-	    0.5f * ((-points[p0].y + 3 * points[p1].y - 3 * points[p2].y + points[p3].y) * (t * t * t) +
-	            (2 * points[p0].y - 5 * points[p1].y + 4 * points[p2].y - points[p3].y) * (t * t) +
-	            (-points[p0].y + points[p2].y) * t + 2 * points[p1].y),
-	    0.5f * ((-points[p0].z + 3 * points[p1].z - 3 * points[p2].z + points[p3].z) * (t * t * t) +
-	            (2 * points[p0].z - 5 * points[p1].z + 4 * points[p2].z - points[p3].z) * (t * t) +
-	            (-points[p0].z + points[p2].z) * t + 2 * points[p1].z)
-	};
+Vector3 CatmullRomSpline::Catmull_Rom(std::vector<Vector3> controlPoints, float t) {
+
+	int n = (int)controlPoints.size();
+	int segment = static_cast<int>(t * (n - 1));
+	float tSegment = t * (n - 1) - segment;
+
+	Vector3 p0 = controlPoints[segment > 0 ? segment - 1 : 0];
+	Vector3 p1 = controlPoints[segment];
+	Vector3 p2 = controlPoints[segment < n - 1 ? segment + 1 : n - 1];
+	Vector3 p3 = controlPoints[segment < n - 2 ? segment + 2 : n - 1];
+
+	Vector3 interpolatedPoint;
+	interpolatedPoint.x =
+	    0.5f * ((2.0f * p1.x) + (-p0.x + p2.x) * tSegment +
+	            (2.0f * p0.x - 5.0f * p1.x + 4.0f * p2.x - p3.x) * (tSegment * tSegment) +
+	            (-p0.x + 3.0f * p1.x - 3.0f * p2.x + p3.x) * (tSegment * tSegment * tSegment));
+	interpolatedPoint.y =
+	    0.5f * ((2.0f * p1.y) + (-p0.y + p2.y) * tSegment +
+	            (2.0f * p0.y - 5.0f * p1.y + 4.0f * p2.y - p3.y) * (tSegment * tSegment) +
+	            (-p0.y + 3.0f * p1.y - 3.0f * p2.y + p3.y) * (tSegment * tSegment * tSegment));
+	interpolatedPoint.z =
+	    0.5f * ((2.0f * p1.z) + (-p0.z + p2.z) * tSegment +
+	            (2.0f * p0.z - 5.0f * p1.z + 4.0f * p2.z - p3.z) * (tSegment * tSegment) +
+	            (-p0.z + 3.0f * p1.z - 3.0f * p2.z + p3.z) * (tSegment * tSegment * tSegment));
+
+	return interpolatedPoint;
 }
 
