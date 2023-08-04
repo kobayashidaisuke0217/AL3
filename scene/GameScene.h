@@ -66,6 +66,7 @@ private: // メンバ変数
 	SkyDome* skyDome_;
 	RailCamera* railCamera_;
 	CatmullRomSpline* Spline_;
+	
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>

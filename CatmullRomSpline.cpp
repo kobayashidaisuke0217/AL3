@@ -10,19 +10,18 @@ void CatmullRomSpline::Initialize(ViewProjection* view) {
 		{30, 0, 0},
 
 	};
-	pointCount_ = 10;
+	pointCount_ = 100;
 	
 	primitiveDrawer_->GetInstance()->SetViewProjection(view);
-	
-}
-
-void CatmullRomSpline::Update() {
 	for (size_t i = 0; i < pointCount_ + 1; i++) {
 		float t = 1.0f / pointCount_ * i;
 		Vector3 pos = Catmull_Rom(controlPoints_, t);
 		pointsDrawing_.push_back(pos);
-	
 	}
+}
+
+void CatmullRomSpline::Update() {
+	
 	
 }
 

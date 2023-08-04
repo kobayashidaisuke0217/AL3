@@ -118,6 +118,7 @@ void GameScene::Draw() {
 	player_->Draw(viewProjection_);
 	skyDome_->Draw(viewProjection_);
 	Spline_->Draw();
+	
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
 #pragma endregion
