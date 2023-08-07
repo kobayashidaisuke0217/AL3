@@ -3,18 +3,18 @@
 #include<vector>
 #include<PrimitiveDrawer.h>
 #include "ViewProjection.h"
+
 class CatmullRomSpline {
 public:
 	void Initialize(const ViewProjection& view);
 
-	void Update();
+	Vector3 Update(const std::vector<Vector3>& points, float t);
 
-	void Draw();
-
+	void Draw(const size_t& count, const std::vector<Vector3>& drawPoints);
+	
+Vector3 Catmull_Rom(std::vector<Vector3> points, float t);
 private:
-	std::vector<Vector3> controlPoints_;
+	
 	PrimitiveDrawer* primitiveDrawer_;
-	std::vector<Vector3> pointsDrawing_;
-	size_t pointCount_;
-	Vector3 Catmull_Rom(std::vector<Vector3> points, float t);
+	
 };

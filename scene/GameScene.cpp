@@ -41,10 +41,10 @@ void GameScene::Initialize() {
 	skyDome_ = new SkyDome();
 	skyDome_->Initialize(skyDomeModel_);
 	railCamera_ = new RailCamera();
-	railCamera_->Initialize({0.0f, 0.0f, 0.0f}, {0.0f,0.0f,0.0f});
+	railCamera_->Initialize({0.0f, 0.0f, 0.0f}, {0.0f,0.0f,0.0f},viewProjection_);
 	player_->Setparent(&railCamera_->GetWorldTransform());
-	Spline_ = new CatmullRomSpline();
-	Spline_->Initialize(viewProjection_);
+	/*Spline_ = new CatmullRomSpline();
+	Spline_->Initialize(viewProjection_);*/
 }
 
 void GameScene::Update() {
@@ -83,7 +83,7 @@ void GameScene::Update() {
 	}
 	collisionManager_->CheckAllCollision();
 	skyDome_->Update();
-	Spline_->Update();
+	//Spline_->Update();
 }
 
 void GameScene::Draw() {
@@ -112,13 +112,14 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
+	
 	if (enemy_) {
 		enemy_->Draw(viewProjection_);
 	}
 	player_->Draw(viewProjection_);
 	skyDome_->Draw(viewProjection_);
-	
-		Spline_->Draw();
+	railCamera_->Draw();
+		//Spline_->Draw();
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
 

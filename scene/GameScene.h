@@ -65,7 +65,7 @@ private: // メンバ変数
 	CollisionManager* collisionManager_;
 	SkyDome* skyDome_;
 	RailCamera* railCamera_;
-	CatmullRomSpline* Spline_;
+	//CatmullRomSpline* Spline_;
 	
 	/// <summary>
 	/// ゲームシーン用

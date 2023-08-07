@@ -1,35 +1,26 @@
 #include "CatmullRomSpline.h"
 
 void CatmullRomSpline::Initialize(const ViewProjection& view) {
-	controlPoints_ = {
-	    {0, 0, 0,},
-		{10, 10, 0},
-		{10, 15, 0},
-		{20, 15, 0},
-		{20, 0, 0},
-		{30, 0, 0},
-
-	};
-	pointCount_ = 100;
+	
 	primitiveDrawer_->GetInstance()->SetViewProjection(&view);
+
+	
 }
 
-void CatmullRomSpline::Update() {
+Vector3 CatmullRomSpline::Update( const std::vector<Vector3>& points,float t) {
+	//Vector3 drawPoints;
+		Vector3 pos = Catmull_Rom(points, t);
+		//drawPoints.push_back(pos);
 	
-		
+	return pos;
 	
-	for (size_t i = 0; i < pointCount_ + 1; i++) {
-		float t = 1.0f / pointCount_ * i;
-		Vector3 pos = Catmull_Rom(controlPoints_, t);
-		pointsDrawing_.push_back(pos);
-	}
 }
 
-void CatmullRomSpline::Draw() {
-	for (uint32_t i = 0; i < pointCount_-1; i++) {
+void CatmullRomSpline::Draw(const size_t& count,const std::vector<Vector3>& drawPoints) {
+	for (uint32_t i = 0; i < count-1 ; i++) {
 		
 		PrimitiveDrawer::GetInstance()->DrawLine3d(
-		    pointsDrawing_[i], pointsDrawing_[i+1], { 1.0f, 0.0f, 0.0f, 1.0f });
+		    drawPoints[i], drawPoints[i + 1], {1.0f, 0.0f, 0.0f, 1.0f});
 	}
 
 }
