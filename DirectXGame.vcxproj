@@ -111,6 +111,8 @@
     <ClCompile Include="base\WinApp.cpp" />
     <ClCompile Include="Enemy\Enemy.cpp" />
     <ClCompile Include="Enemy\EnemyState.cpp" />
+    <ClCompile Include="Enemy\EnemystateApproach.cpp" />
+    <ClCompile Include="Enemy\EnemyStateLeav.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="math\matrixCalc.cpp" />
     <ClCompile Include="math\Vector3Calc.cpp" />
@@ -144,6 +146,8 @@
     <ClInclude Include="base\WinApp.h" />
     <ClInclude Include="Enemy\Enemy.h" />
     <ClInclude Include="Enemy\EnemyState.h" />
+    <ClInclude Include="Enemy\EnemystateApproach.h" />
+    <ClInclude Include="Enemy\EnemyStateLeav.h" />
     <ClInclude Include="input\Input.h" />
     <ClInclude Include="math\Matrix4x4.h" />
     <ClInclude Include="math\matrixCalc.h" />

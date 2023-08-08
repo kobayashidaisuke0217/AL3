@@ -1,8 +1,11 @@
-#pragma once
-#include "EnemyState.h"
+﻿#pragma once
+#include "EnemystateApproach.h"
+#include "EnemyStateLeav.h"
+#include"EnemyState.h"
 #include "Model.h"
 #include "Vector3Calc.h"
 #include <WorldTransform.h>
+#include <memory>
 class EnemyState;
 class Enemy {
 
@@ -17,12 +20,17 @@ public:
 	void Setpos(const Vector3& pos) { worldTransform_.translation_ = pos; }
 	void Move(Vector3 velocity);
 	Vector3 GetSpeed() { return velocity_; }
-	void ChangeEnemyState(EnemyState* enemyState);
+
 
 private:
-	EnemyState* state_;
+	//EnemyState* state_;
 	WorldTransform worldTransform_;
 	Model* model_;
 	uint32_t texturehandle_;
 	Vector3 velocity_;
+
+	int stateNum_;
+	int preStateNum_;
+	EnemyState* stateArr_[2];
+	
 };

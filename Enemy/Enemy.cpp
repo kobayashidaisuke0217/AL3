@@ -2,7 +2,8 @@
 #include <assert.h>
 
 Enemy::Enemy() {}
-Enemy::~Enemy() { delete state_; }
+Enemy::~Enemy() { 
+}
 
 void Enemy::Initialize(Model* model, const Vector3& position, const Vector3& velocity) {
 	assert(model);
@@ -11,13 +12,16 @@ void Enemy::Initialize(Model* model, const Vector3& position, const Vector3& vel
 	worldTransform_.Initialize();
 	worldTransform_.translation_ = position;
 	velocity_ = velocity;
-	state_ = new EnemyStateApproach();
+	stateArr_[0] = new EnemyStateApproach();
+	stateArr_[1] = new EnemyStateLeav();
+	//state_ = new EnemyStateApproach();
 }
 
 void Enemy::Update() {
 	worldTransform_.UpdateMatrix();
-
-	state_->Update(this);
+	preStateNum_ = stateNum_;
+	stateNum_ = stateArr_[stateNum_]->GetNum();
+	stateArr_[stateNum_]->Update(this);
 }
 
 void Enemy::Draw(const ViewProjection& view) {
@@ -29,7 +33,4 @@ void Enemy::Move(Vector3 velocity) {
 	worldTransform_.translation_ = Add(worldTransform_.translation_, velocity);
 }
 
-void Enemy::ChangeEnemyState(EnemyState* enemyState) {
-	delete state_;
-	state_ = enemyState;
-}
+
