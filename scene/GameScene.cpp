@@ -5,8 +5,8 @@
 GameScene::GameScene() {}
 
 GameScene::~GameScene() { 
-	delete model_;
-	delete player_;
+	
+	
 
 
 }
@@ -17,10 +17,11 @@ void GameScene::Initialize() {
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
 	textyreHandle_ = TextureManager::Load("sample.png");
-	model_ = Model::Create();
+	model_.reset(Model::Create());
 	viewprojection_.Initialize();
-	player_ = new Player();
-	player_->Initialize(model_,textyreHandle_);
+	//player_ = new Player();
+	player_ = std::make_unique<Player>();
+	player_->Initialize(model_.get(), textyreHandle_);
 }
 
 void GameScene::Update() { player_->Update(); }
