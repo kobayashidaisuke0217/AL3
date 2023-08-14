@@ -15,10 +15,17 @@ void GameScene::Initialize() {
 	audio_ = Audio::GetInstance();
 	textyreHandle_ = TextureManager::Load("sample.png");
 	model_.reset(Model::Create());
+	skyDomeModel_.reset(Model::CreateFromOBJ("",true));
+	groundModel_.reset(Model::CreateFromOBJ("", true));
+	playerModel_.reset(Model::CreateFromOBJ("Player", true));
 	viewprojection_.Initialize();
 	//player_ = new Player();
 	player_ = std::make_unique<Player>();
-	player_->Initialize(model_.get(), textyreHandle_);
+	player_->Initialize(playerModel_.get(), textyreHandle_);
+	skyDome_ = std::make_unique<SkyDome>();
+	skyDome_->Initialize(skyDomeModel_.get());
+
+
 }
 
 void GameScene::Update() { player_->Update(); }
