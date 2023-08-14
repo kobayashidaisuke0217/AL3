@@ -8,8 +8,10 @@
 #include "Sprite.h"
 #include "ViewProjection.h"
 #include "WorldTransform.h"
-#include "Player.h"
+#include "Player/Player.h"
 #include <memory>
+#include"skyDome/SkyDome.h"
+#include"ground/Ground.h"
 /// <summary>
 /// ゲームシーン
 /// </summary>
@@ -52,6 +54,9 @@ private: // メンバ変数
 
 	//Player* player_ = nullptr;
 	std::unique_ptr<Player> player_;
+	std::unique_ptr<Ground> ground_;
+
+	std::unique_ptr<SkyDome> skyDome_;
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>
