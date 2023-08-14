@@ -1,4 +1,4 @@
-#pragma once?
+ï»¿#pragma once
 #include "MyMath.h"
 
 Matrix4x4 Inverse(const Matrix4x4& m) {
@@ -244,7 +244,7 @@ Vector3 Slerp(float t, const Vector3& s, const Vector3& e) {
 	return Add(Multiply(t1, s), Multiply(t2, e));
 }
 
-// ƒrƒ…[ƒ|[ƒg•ÏŠ·s—ñ
+// ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆå¤‰æ›è¡Œåˆ—
 Matrix4x4
     MakeViewportMatrix(float left, float top, float width, float height, float min, float max) {
 	Matrix4x4 result;

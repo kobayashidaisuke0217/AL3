@@ -15,20 +15,39 @@ void GameScene::Initialize() {
 	audio_ = Audio::GetInstance();
 	textyreHandle_ = TextureManager::Load("sample.png");
 	model_.reset(Model::Create());
-	skyDomeModel_.reset(Model::CreateFromOBJ("",true));
-	groundModel_.reset(Model::CreateFromOBJ("", true));
+	skyDomeModel_.reset(Model::CreateFromOBJ("skyDome",true));
+	groundModel_.reset(Model::CreateFromOBJ("ground", true));
 	playerModel_.reset(Model::CreateFromOBJ("Player", true));
 	viewprojection_.Initialize();
-	//player_ = new Player();
+	debugCamera_ = std::make_unique<DebugCamera>(1280,720);
+	
 	player_ = std::make_unique<Player>();
-	player_->Initialize(playerModel_.get(), textyreHandle_);
+	player_->Initialize(playerModel_.get());
 	skyDome_ = std::make_unique<SkyDome>();
 	skyDome_->Initialize(skyDomeModel_.get());
-
+	ground_ = std::make_unique<Ground>();
+	ground_->Initialize(groundModel_.get());
 
 }
 
-void GameScene::Update() { player_->Update(); }
+void GameScene::Update() { 
+	player_->Update();
+	debugCamera_->Update();
+#ifdef _DEBUG
+	if (input_->TriggerKey(DIK_RETURN)) {
+		isDebugcameraActive_ = true;
+	}
+#endif
+	// カメラの処理
+	if (isDebugcameraActive_ == true) {
+		debugCamera_->Update();
+		viewprojection_.matView = debugCamera_->GetViewProjection().matView;
+		viewprojection_.matProjection = debugCamera_->GetViewProjection().matProjection;
+		viewprojection_.TransferMatrix();
+	} else {
+		viewprojection_.UpdateMatrix();
+	}
+}
 
 void GameScene::Draw() {
 
@@ -56,7 +75,9 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
-
+	
+	skyDome_->Draw(viewprojection_);
+	ground_->Draw(viewprojection_);
 	player_->Draw(viewprojection_);
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
