@@ -51,11 +51,12 @@ private: // メンバ変数
 	uint32_t textyreHandle_ = 0;
 	std::unique_ptr<Model> model_ = nullptr;
 	ViewProjection viewprojection_;
-
+	std::unique_ptr<Model> groundModel_ = nullptr;
+	std::unique_ptr<Model> skyDomeModel_ = nullptr;
+	std::unique_ptr<Model> playerModel_ = nullptr;
 	//Player* player_ = nullptr;
 	std::unique_ptr<Player> player_;
 	std::unique_ptr<Ground> ground_;
-
 	std::unique_ptr<SkyDome> skyDome_;
 	/// <summary>
 	/// ゲームシーン用
