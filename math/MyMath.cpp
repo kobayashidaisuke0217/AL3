@@ -162,6 +162,14 @@ Matrix4x4 MakeRotateZMatrix(float theta) {
 	return result;
 }
 
+Matrix4x4 MakeRotateMatrix(Vector3 theta) { 
+
+    Matrix4x4 rotateX = MakeRotateXMatrix(theta.x);
+	Matrix4x4 rotateY = MakeRotateYMatrix(theta.y);
+    Matrix4x4 rotateZ = MakeRotateZMatrix(theta.z);
+	return Multiply(rotateX, Multiply(rotateY, rotateZ));
+}
+
 Matrix4x4 Multiply(const Matrix4x4& m1, const Matrix4x4& m2) {
 	Matrix4x4 result;
 	float term = 0.0f;

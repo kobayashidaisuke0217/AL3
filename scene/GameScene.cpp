@@ -20,14 +20,16 @@ void GameScene::Initialize() {
 	playerModel_.reset(Model::CreateFromOBJ("Player", true));
 	viewprojection_.Initialize();
 	debugCamera_ = std::make_unique<DebugCamera>(1280,720);
-	
 	player_ = std::make_unique<Player>();
 	player_->Initialize(playerModel_.get());
 	skyDome_ = std::make_unique<SkyDome>();
 	skyDome_->Initialize(skyDomeModel_.get());
 	ground_ = std::make_unique<Ground>();
 	ground_->Initialize(groundModel_.get());
-
+	followCamera_ = std::make_unique<FollowCamera>();
+	followCamera_->Initialize();
+	followCamera_->SetTarget(&player_->GetWorldtransform());
+	player_->SetViewProjection(&followCamera_->GetViewProjection());
 }
 
 void GameScene::Update() { 
@@ -36,7 +38,7 @@ void GameScene::Update() {
 #ifdef _DEBUG
 	if (input_->TriggerKey(DIK_RETURN)) {
 		isDebugcameraActive_ = true;
-	}
+	} 
 #endif
 	// カメラの処理
 	if (isDebugcameraActive_ == true) {
@@ -47,6 +49,10 @@ void GameScene::Update() {
 	} else {
 		viewprojection_.UpdateMatrix();
 	}
+	followCamera_->Update();
+	viewprojection_.matView = followCamera_->GetViewProjection().matView;
+	viewprojection_.matProjection = followCamera_->GetViewProjection().matProjection;
+	viewprojection_.TransferMatrix();
 }
 
 void GameScene::Draw() {
