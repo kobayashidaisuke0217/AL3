@@ -5,6 +5,8 @@
 #include "Vector4.h"
 #include <cassert>
 #include <cmath>
+#include <math.h>
+#define _USE_MATH_DEFINES
 Vector3 TransformNormal(const Vector3& v, const Matrix4x4& m);
 Vector3 Add(Vector3 a, Vector3 b);
 

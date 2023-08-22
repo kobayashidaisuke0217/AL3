@@ -1,17 +1,49 @@
 #include "Player.h"
 #include <cassert>
-void Player::Initialize(Model* model) { 
-	assert(model);
-	model_ = model;
+#include "math/MyMath.h"
+#include"ImGuiManager.h"
+
+void Player::Initialize(Model* modelHead, Model* modelBody, Model* modelRarm, Model* modelLarm) { 
+	
+	modelBody_ = modelBody;
+	modelHead_ = modelHead;
+	modelLarm_ = modelLarm;
+	modelRarm_ = modelRarm;
 	input_ = Input::GetInstance();
-	worldTransform_.Initialize();
+	SetParent(&GetWorldTransformBody());
+	//worldTransform_.Initialize();
+	InitializeFloatGimmick();
+	worldTransformHead_.translation_ = {0.0f, 1.0f, 0.0f};
+	worldTransformLarm_.translation_ = {-0.2f, 1.0f, 0.0f};
+	worldTransformRarm_.translation_ = {0.2f, 1.0f, 0.0f};
+	
+	worldTransformBase_.Initialize();
+	worldTransformBody_.Initialize();
+	worldTransformHead_.Initialize();
+	worldTransformLarm_.Initialize();
+	worldTransformRarm_.Initialize();
+
 }
 
-void Player::Update() { worldTransform_.TransferMatrix();
+void Player::Update() {/* worldTransform_.TransferMatrix();*/
 	Move();
+	UpdateFloatGimmick();
+	ModelUpdateMatrix();
+	ImGui::Begin("Player");
+	ImGui::DragFloat3("Head", &worldTransformHead_.translation_.x,0.1f);
+	ImGui::DragFloat3("Body", &worldTransformBody_.translation_.x, 0.1f);
+	ImGui::DragFloat3("LArm", &worldTransformLarm_.translation_.x, 0.1f);
+	ImGui::DragFloat3("RArm", &worldTransformRarm_.translation_.x, 0.1f);
+	ImGui::DragFloat3("Base", &worldTransformBase_.translation_.x, 0.1f);
+	ImGui::End();
 }
 void Player::Draw(ViewProjection view) { 
-	model_->Draw(worldTransform_, view);
+	//model_->Draw(worldTransform_, view);
+	modelBody_->Draw(worldTransformBody_, view);
+	modelHead_->Draw(worldTransformHead_, view);
+	modelLarm_->Draw(worldTransformLarm_, view);
+	modelRarm_->Draw(worldTransformRarm_, view);
+	
 
 }
 
@@ -25,8 +57,44 @@ void Player::Move() { XINPUT_STATE joystate;
 		move = Multiply(kCharctorSpeed,Normalise( move));
 	   Matrix4x4 rotateMatrix = MakeRotateMatrix(viewProjection_->rotation_);
 		move = TransformNormal(move, rotateMatrix);
-	   worldTransform_.translation_ = Add(move, worldTransform_.translation_);
-		worldTransform_.rotation_.y = std::atan2(move.x, move.z);
+	   worldTransformBase_.translation_ = Add(move, worldTransformBase_.translation_);
+		worldTransformBody_.translation_ = worldTransformBase_.translation_;
+		worldTransformBody_.rotation_.y = std::atan2(move.x, move.z);
    }
-   worldTransform_.UpdateMatrix();
+   
+}
+
+void Player::SetParent(const WorldTransform* parent) {
+   worldTransformBase_.parent_ = parent;
+   worldTransformHead_.parent_ = parent;
+   worldTransformRarm_.parent_ = parent;
+   worldTransformLarm_.parent_ = parent;
+}
+
+void Player::ModelUpdateMatrix() { 
+	worldTransformBase_.UpdateMatrix();
+   worldTransformBody_.UpdateMatrix();
+   worldTransformHead_.UpdateMatrix();
+   worldTransformRarm_.UpdateMatrix();
+   worldTransformLarm_.UpdateMatrix();
+}
+
+void Player::InitializeFloatGimmick() { floatingParametor_ = 0.0f; }
+
+void Player::UpdateFloatGimmick() {
+    uint16_t T = 120;
+
+    float step = 2.0f * (float)M_PI / T;
+float floatingAmplitude = 0.3f;
+
+   floatingParametor_ += step;
+   floatingParametor_ = (float)std::fmod(floatingParametor_, 2.0f * M_PI);
+
+    
+
+   worldTransformBody_.translation_.y = std::sin(floatingParametor_) * floatingAmplitude+0.2f;
+
+   worldTransformLarm_.rotation_.x = std::sin(floatingParametor_) * 0.75f;
+   worldTransformRarm_.rotation_.x = std::sin(floatingParametor_) * 0.75f;
+   
 }
