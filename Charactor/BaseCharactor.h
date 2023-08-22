@@ -4,7 +4,7 @@
 #include <Model.h>
 #include <vector>
 
-enum ModelParts { kModelBody, kModelHead, kModelLarm, kModelRarm };
+enum ModelParts { kModelBody, kModelHead, kModelLarm, kModelRarm, kModelHammer };
 
 class BaseCharactor {
 public:

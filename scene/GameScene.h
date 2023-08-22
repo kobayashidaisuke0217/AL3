@@ -63,7 +63,7 @@ private: // メンバ変数
 	std::unique_ptr<Model> playerBodyModel = nullptr;
 	std::unique_ptr<Model> playerL_armModel = nullptr;
 	std::unique_ptr<Model> playerR_armModel = nullptr;
-
+	std::unique_ptr<Model> playerHammerModel = nullptr;
 	std::unique_ptr<DebugCamera> debugCamera_ = nullptr;
 	//Player* player_ = nullptr;
 	std::unique_ptr<Player> player_;

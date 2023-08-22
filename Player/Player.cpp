@@ -10,6 +10,7 @@ void Player::Initialize(const std::vector<Model*>& models)  {
 	models_[kModelBody] = models[kModelBody];
 	models_[kModelLarm] = models[kModelLarm];
 	models_[kModelRarm] = models[kModelRarm];
+	models_[kModelHammer] = models[kModelHammer];
 	input_ = Input::GetInstance();
 	SetParent(&GetWorldTransformBody());
 	//worldTransform_.Initialize();
@@ -23,12 +24,44 @@ void Player::Initialize(const std::vector<Model*>& models)  {
 	worldTransformHead_.Initialize();
 	worldTransformLarm_.Initialize();
 	worldTransformRarm_.Initialize();
-
+	worldTransformHammer_.Initialize();
+	animationFrame = 0;
 }
 
 void Player::Update() {/* worldTransform_.TransferMatrix();*/
-	Move();
-	UpdateFloatGimmick();
+	//BehaviorRootUpdate();
+	XINPUT_STATE joyState;
+
+	if (!Input::GetInstance()->GetJoystickState(0, joyState)) {
+		return;
+	}
+
+	if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER) {
+		behaviorRequest_ = Behavior::kAttack;
+	}
+	if (behaviorRequest_) {
+		behavior_ = behaviorRequest_.value();
+		switch (behavior_) {
+		case Behavior::kRoot:
+		default:
+			BehaviorRootInitialize();
+			break;
+		case Behavior::kAttack:
+			BehaviorAtackInitialize();
+			break;
+		
+		}
+		behaviorRequest_ = std::nullopt;
+	}
+	switch (behavior_) {
+	case Behavior::kRoot:
+	default:
+		BehaviorRootUpdate();
+		break;
+	case Behavior::kAttack:
+		BehaviorAtackUpdate();
+		break;
+	}
 	ModelUpdateMatrix();
 	ImGui::Begin("Player");
 	ImGui::DragFloat3("Head", &worldTransformHead_.translation_.x,0.1f);
@@ -36,6 +69,7 @@ void Player::Update() {/* worldTransform_.TransferMatrix();*/
 	ImGui::DragFloat3("LArm", &worldTransformLarm_.translation_.x, 0.1f);
 	ImGui::DragFloat3("RArm", &worldTransformRarm_.translation_.x, 0.1f);
 	ImGui::DragFloat3("Base", &worldTransformBase_.translation_.x, 0.1f);
+	ImGui::DragFloat3("Hammer", &worldTransformHammer_.translation_.x, 0.1f);
 	ImGui::End();
 }
 void Player::Draw(const ViewProjection& view) { 
@@ -43,7 +77,7 @@ void Player::Draw(const ViewProjection& view) {
 	models_[kModelHead]->Draw(worldTransformHead_, view);
 	models_[kModelLarm]->Draw(worldTransformLarm_, view);
 	models_[kModelRarm]->Draw(worldTransformRarm_, view);
-
+	models_[kModelHammer]->Draw(worldTransformHammer_, view);
 }
 
 void Player::Move() { XINPUT_STATE joystate;
@@ -68,6 +102,7 @@ void Player::SetParent(const WorldTransform* parent) {
    worldTransformHead_.parent_ = parent;
    worldTransformRarm_.parent_ = parent;
    worldTransformLarm_.parent_ = parent;
+   worldTransformHammer_.parent_ = parent;
 }
 
 void Player::ModelUpdateMatrix() { 
@@ -76,6 +111,7 @@ void Player::ModelUpdateMatrix() {
    worldTransformHead_.UpdateMatrix();
    worldTransformRarm_.UpdateMatrix();
    worldTransformLarm_.UpdateMatrix();
+   worldTransformHammer_.UpdateMatrix();
 }
 
 void Player::InitializeFloatGimmick() { floatingParametor_ = 0.0f; }
@@ -97,3 +133,50 @@ float floatingAmplitude = 0.3f;
    worldTransformRarm_.rotation_.x = std::sin(floatingParametor_) * 0.75f;
    
 }
+
+void Player::BehaviorRootUpdate() {
+   Move();
+   UpdateFloatGimmick();
+}
+
+void Player::BehaviorAtackUpdate() {
+   if (animationFrame < 10) {
+		worldTransformLarm_.rotation_.x -= 0.05f;
+		worldTransformRarm_.rotation_.x -= 0.05f;
+
+		worldTransformHammer_.rotation_.x -= 0.05f;
+   } else if (worldTransformHammer_.rotation_.x <= 2.0f * (float)M_PI / 4) {
+		worldTransformLarm_.rotation_.x += 0.1f;
+		worldTransformRarm_.rotation_.x += 0.1f;
+
+		worldTransformHammer_.rotation_.x += 0.1f;
+   } else {
+		behaviorRequest_ = Behavior::kRoot;
+   }
+
+   animationFrame++;
+
+}
+
+void Player::BehaviorRootInitialize() {
+   worldTransformLarm_.rotation_.x = 0.0f;
+   worldTransformRarm_.rotation_.x = 0.0f;
+   worldTransformHammer_.rotation_.x = 0.0f;
+
+   InitializeFloatGimmick();
+
+   worldTransformBody_.Initialize();
+   worldTransformHead_.Initialize();
+   worldTransformLarm_.Initialize();
+   worldTransformRarm_.Initialize();
+   worldTransformHammer_.Initialize();
+}
+
+void Player::BehaviorAtackInitialize() {
+   worldTransformLarm_.rotation_.x = (float)M_PI;
+   worldTransformRarm_.rotation_.x = (float)M_PI;
+   worldTransformHammer_.rotation_.x = 0.0f;
+   animationFrame = 0;
+}
+
+

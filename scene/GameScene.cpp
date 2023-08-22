@@ -22,13 +22,14 @@ void GameScene::Initialize() {
 	playerHeadModel.reset(Model::CreateFromOBJ("float_head"));
 	playerL_armModel.reset(Model::CreateFromOBJ("float_L_arm"));
 	playerR_armModel.reset(Model::CreateFromOBJ("float_R_arm"));
+	playerHammerModel.reset(Model::CreateFromOBJ("hammer"));
 	enemyModel_.reset(Model::CreateFromOBJ("needle_Body"));
 	viewprojection_.Initialize();
 	debugCamera_ = std::make_unique<DebugCamera>(1280,720);
 	player_ = std::make_unique<Player>();
 	std::vector<Model*> playerModels = {
 	    playerBodyModel.get(), playerHeadModel.get(), playerL_armModel.get(),
-	    playerR_armModel.get()};
+	    playerR_armModel.get(), playerHammerModel.get()};
 	player_->Initialize(playerModels);
 	skyDome_ = std::make_unique<SkyDome>();
 	skyDome_->Initialize(skyDomeModel_.get());

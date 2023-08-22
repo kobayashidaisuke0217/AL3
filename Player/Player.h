@@ -4,6 +4,7 @@
 #include"Input.h"
 #include<Charactor/BaseCharactor.h>
 #include"ViewProjection.h"
+#include <optional>
 class Player :public BaseCharactor
 {
 public:
@@ -18,11 +19,16 @@ const WorldTransform& GetWorldTransformBase() { return worldTransformBase_; }
 void SetViewProjection(const ViewProjection* view) { viewProjection_ = view; }
 
 private:
+	enum class Behavior {
+		kRoot,
+		kAttack,
+};
 WorldTransform worldTransformBase_;
 WorldTransform worldTransformHead_;
 WorldTransform worldTransformLarm_;
 WorldTransform worldTransformRarm_;
 WorldTransform worldTransformBody_;
+WorldTransform worldTransformHammer_;
 	/*Model* model_ = nullptr;
 Model* modelHead_ = nullptr;
 	Model* modelBody_ = nullptr;
@@ -32,7 +38,9 @@ Model* modelRarm_ = nullptr;*/
 	Input* input_ = nullptr;
 	const ViewProjection* viewProjection_ = nullptr;
 	float floatingParametor_ = 0.0f;
-
+	int animationFrame;
+	Behavior behavior_ = Behavior::kRoot;
+	std::optional<Behavior> behaviorRequest_ = std::nullopt;
 
 private:
 	void Move();
@@ -40,4 +48,9 @@ private:
 	void ModelUpdateMatrix();
 	void InitializeFloatGimmick();
 	void UpdateFloatGimmick();
+	void BehaviorRootUpdate();
+	void BehaviorAtackUpdate();
+	void BehaviorRootInitialize();
+	void BehaviorAtackInitialize();
+	
 };
