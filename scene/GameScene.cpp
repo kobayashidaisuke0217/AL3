@@ -22,10 +22,14 @@ void GameScene::Initialize() {
 	playerHeadModel.reset(Model::CreateFromOBJ("float_head"));
 	playerL_armModel.reset(Model::CreateFromOBJ("float_L_arm"));
 	playerR_armModel.reset(Model::CreateFromOBJ("float_R_arm"));
+	enemyModel_.reset(Model::CreateFromOBJ("needle_Body"));
 	viewprojection_.Initialize();
 	debugCamera_ = std::make_unique<DebugCamera>(1280,720);
 	player_ = std::make_unique<Player>();
-	player_->Initialize(playerHeadModel.get(),playerBodyModel.get(),playerR_armModel.get(),playerL_armModel.get());
+	std::vector<Model*> playerModels = {
+	    playerBodyModel.get(), playerHeadModel.get(), playerL_armModel.get(),
+	    playerR_armModel.get()};
+	player_->Initialize(playerModels);
 	skyDome_ = std::make_unique<SkyDome>();
 	skyDome_->Initialize(skyDomeModel_.get());
 	ground_ = std::make_unique<Ground>();
@@ -34,10 +38,14 @@ void GameScene::Initialize() {
 	followCamera_->Initialize();
 	followCamera_->SetTarget(&player_->GetWorldTransformBase());
 	player_->SetViewProjection(&followCamera_->GetViewProjection());
+	std::vector<Model*> enemyModels{enemyModel_.get()};
+	enemy_ = std::make_unique<Enemy>();
+	enemy_->Initialize(enemyModels);
 }
 
 void GameScene::Update() { 
 	player_->Update();
+	enemy_->Update();
 	debugCamera_->Update();
 #ifdef _DEBUG
 	if (input_->TriggerKey(DIK_RETURN)) {
@@ -86,9 +94,11 @@ void GameScene::Draw() {
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
 	
+	
+	player_->Draw(viewprojection_);
+	enemy_->Draw(viewprojection_);
 	skyDome_->Draw(viewprojection_);
 	ground_->Draw(viewprojection_);
-	player_->Draw(viewprojection_);
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
 #pragma endregion

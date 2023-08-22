@@ -15,6 +15,7 @@
 #include"DebugCamera.h"
 #include "FollowCamera.h"
 #include<vector>
+#include"Enemy/Enemy.h"
 /// <summary>
 /// ゲームシーン
 /// </summary>
@@ -54,6 +55,7 @@ private: // メンバ変数
 	uint32_t textyreHandle_ = 0;
 	std::unique_ptr<Model> model_ = nullptr;
 	ViewProjection viewprojection_;
+	std::unique_ptr<Model> enemyModel_ = nullptr;
 	std::unique_ptr<Model> groundModel_ = nullptr;
 	std::unique_ptr<Model> skyDomeModel_ = nullptr;
 	std::unique_ptr<Model> playerModel_ = nullptr;
@@ -61,9 +63,11 @@ private: // メンバ変数
 	std::unique_ptr<Model> playerBodyModel = nullptr;
 	std::unique_ptr<Model> playerL_armModel = nullptr;
 	std::unique_ptr<Model> playerR_armModel = nullptr;
+
 	std::unique_ptr<DebugCamera> debugCamera_ = nullptr;
 	//Player* player_ = nullptr;
 	std::unique_ptr<Player> player_;
+	std::unique_ptr<Enemy> enemy_;
 	std::unique_ptr<Ground> ground_;
 	std::unique_ptr<SkyDome> skyDome_;
 	std::unique_ptr<FollowCamera> followCamera_;

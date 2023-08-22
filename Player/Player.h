@@ -2,17 +2,17 @@
 #include "WorldTransform.h"
 #include "Model.h"
 #include"Input.h"
-
+#include<Charactor/BaseCharactor.h>
 #include"ViewProjection.h"
-class Player 
+class Player :public BaseCharactor
 {
 public:
-	void Initialize(Model* modelHead, Model* modelBody, Model* modelRarm, Model* modelLarm);
+	void Initialize(const std::vector<Model*>& models) override;
 
 
-void Update();
+void Update()override;
 
-void Draw(ViewProjection view);
+void Draw(const ViewProjection& view)override;
 const WorldTransform& GetWorldTransformBody() { return worldTransformBody_; }
 const WorldTransform& GetWorldTransformBase() { return worldTransformBase_; }
 void SetViewProjection(const ViewProjection* view) { viewProjection_ = view; }
@@ -23,11 +23,11 @@ WorldTransform worldTransformHead_;
 WorldTransform worldTransformLarm_;
 WorldTransform worldTransformRarm_;
 WorldTransform worldTransformBody_;
-	Model* model_ = nullptr;
+	/*Model* model_ = nullptr;
 Model* modelHead_ = nullptr;
 	Model* modelBody_ = nullptr;
 Model* modelLarm_ = nullptr;
-Model* modelRarm_ = nullptr;
+Model* modelRarm_ = nullptr;*/
 	uint32_t textureHandle_ = 0u;
 	Input* input_ = nullptr;
 	const ViewProjection* viewProjection_ = nullptr;

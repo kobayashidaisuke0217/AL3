@@ -3,12 +3,13 @@
 #include "math/MyMath.h"
 #include"ImGuiManager.h"
 
-void Player::Initialize(Model* modelHead, Model* modelBody, Model* modelRarm, Model* modelLarm) { 
+void Player::Initialize(const std::vector<Model*>& models)  { 
 	
-	modelBody_ = modelBody;
-	modelHead_ = modelHead;
-	modelLarm_ = modelLarm;
-	modelRarm_ = modelRarm;
+	BaseCharactor::Initialize(models);
+	models_[kModelHead] = models[kModelHead];
+	models_[kModelBody] = models[kModelBody];
+	models_[kModelLarm] = models[kModelLarm];
+	models_[kModelRarm] = models[kModelRarm];
 	input_ = Input::GetInstance();
 	SetParent(&GetWorldTransformBody());
 	//worldTransform_.Initialize();
@@ -37,13 +38,11 @@ void Player::Update() {/* worldTransform_.TransferMatrix();*/
 	ImGui::DragFloat3("Base", &worldTransformBase_.translation_.x, 0.1f);
 	ImGui::End();
 }
-void Player::Draw(ViewProjection view) { 
-	//model_->Draw(worldTransform_, view);
-	modelBody_->Draw(worldTransformBody_, view);
-	modelHead_->Draw(worldTransformHead_, view);
-	modelLarm_->Draw(worldTransformLarm_, view);
-	modelRarm_->Draw(worldTransformRarm_, view);
-	
+void Player::Draw(const ViewProjection& view) { 
+	models_[kModelBody]->Draw(worldTransformBody_, view);
+	models_[kModelHead]->Draw(worldTransformHead_, view);
+	models_[kModelLarm]->Draw(worldTransformLarm_, view);
+	models_[kModelRarm]->Draw(worldTransformRarm_, view);
 
 }
 
