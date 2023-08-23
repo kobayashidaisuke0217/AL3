@@ -3,6 +3,7 @@
 #include "math/MyMath.h"
 #include"ImGuiManager.h"
 #include"Grobalvariables/GlovalVariables.h"
+
 void Player::Initialize(const std::vector<Model*>& models)  { 
 	
 	BaseCharactor::Initialize(models);
