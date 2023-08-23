@@ -16,9 +16,9 @@ void Player::Initialize(const std::vector<Model*>& models)  {
 	SetParent(&GetWorldTransformBody());
 	//worldTransform_.Initialize();
 	InitializeFloatGimmick();
-	worldTransformHead_.translation_ = {0.0f, 1.0f, 0.0f};
+	/*worldTransformHead_.translation_ = {0.0f, 1.0f, 0.0f};
 	worldTransformLarm_.translation_ = {-0.2f, 1.0f, 0.0f};
-	worldTransformRarm_.translation_ = {0.2f, 1.0f, 0.0f};
+	worldTransformRarm_.translation_ = {0.2f, 1.0f, 0.0f};*/
 	
 	worldTransformBase_.Initialize();
 	worldTransformBody_.Initialize();
@@ -31,7 +31,12 @@ void Player::Initialize(const std::vector<Model*>& models)  {
 
 	const char* groupName = "Player";
 	GlovalVariables::GetInstance()->CreateGroup(groupName);
-	globalVariables->SetValue(groupName, "Test", 90.0f);
+	globalVariables->AddItem(groupName, "Test", 90.0f);
+	globalVariables->AddItem(groupName, "Head Translation", worldTransformHead_.translation_);
+	globalVariables->AddItem(groupName, "Body Translation", worldTransformBody_.translation_);
+	globalVariables->AddItem(groupName, "Larm Translation", worldTransformLarm_.translation_);
+	globalVariables->AddItem(groupName, "Rarm Translation", worldTransformRarm_.translation_);
+	ApplyGlobalVariables();
 }
 
 void Player::Update() {/* worldTransform_.TransferMatrix();*/
@@ -185,4 +190,21 @@ void Player::BehaviorAtackInitialize() {
    animationFrame = 0;
 }
 
+void Player::ApplyGlobalVariables() {
+   GlovalVariables* globalVariables= GlovalVariables::GetInstance();
 
+   const char* groupName = "Player";
+
+   worldTransformHead_.translation_ =
+	   globalVariables->GetVector3Value(groupName, "Head Translation");
+   worldTransformBody_.translation_ =
+	   globalVariables->GetVector3Value(groupName, "Body Translation");
+
+    worldTransformLarm_.translation_ =
+	   globalVariables->GetVector3Value(groupName, "Larm Translation");
+   worldTransformRarm_.translation_ =
+	   globalVariables->GetVector3Value(groupName, "Rarm Translation");
+}
+
+ 
+    

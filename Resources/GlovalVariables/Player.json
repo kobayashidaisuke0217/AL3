@@ -1,5 +1,25 @@
 {
     "Player": {
-        "Test": 90.0
+        "Body Translation": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "Head Translation": [
+            0.0,
+            1.0,
+            0.0
+        ],
+        "Larm Translation": [
+            -0.20000000298023224,
+            1.0,
+            0.0
+        ],
+        "Rarm Translation": [
+            0.20000000298023224,
+            1.0,
+            -0.0
+        ],
+        "Test": 43.75
     }
 }

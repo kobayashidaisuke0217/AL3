@@ -52,5 +52,6 @@ private:
 	void BehaviorAtackUpdate();
 	void BehaviorRootInitialize();
 	void BehaviorAtackInitialize();
+	void ApplyGlobalVariables();
 	
 };
