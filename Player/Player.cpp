@@ -2,7 +2,7 @@
 #include <cassert>
 #include "math/MyMath.h"
 #include"ImGuiManager.h"
-
+#include"Grobalvariables/GlovalVariables.h"
 void Player::Initialize(const std::vector<Model*>& models)  { 
 	
 	BaseCharactor::Initialize(models);
@@ -25,7 +25,12 @@ void Player::Initialize(const std::vector<Model*>& models)  {
 	worldTransformLarm_.Initialize();
 	worldTransformRarm_.Initialize();
 	worldTransformHammer_.Initialize();
-	animationFrame = 0;
+	GlovalVariables* globalVariables{};
+	globalVariables = GlovalVariables::GetInstance();
+
+	const char* groupName = "Player";
+	GlovalVariables::GetInstance()->CreateGroup(groupName);
+	globalVariables->SetValue(groupName, "Test", 90.0f);
 }
 
 void Player::Update() {/* worldTransform_.TransferMatrix();*/

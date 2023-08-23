@@ -112,6 +112,7 @@
     <ClCompile Include="Charactor\BaseCharactor.cpp" />
     <ClCompile Include="Enemy\Enemy.cpp" />
     <ClCompile Include="FollowCamera.cpp" />
+    <ClCompile Include="Grobalvariables\GlovalVariables.cpp" />
     <ClCompile Include="ground\Ground.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="math\MyMath.cpp" />
@@ -146,6 +147,7 @@
     <ClInclude Include="Charactor\BaseCharactor.h" />
     <ClInclude Include="Enemy\Enemy.h" />
     <ClInclude Include="FollowCamera.h" />
+    <ClInclude Include="Grobalvariables\GlovalVariables.h" />
     <ClInclude Include="ground\Ground.h" />
     <ClInclude Include="input\Input.h" />
     <ClInclude Include="math\Matrix4x4.h" />
