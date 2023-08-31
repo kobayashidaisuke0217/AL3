@@ -19,6 +19,7 @@ void PlayerBullet::Updarte() {
 	worldTransform_.translation_ = Add(worldTransform_.translation_, velocity_);
 	if (--deathTimer_ <= 0) {
 		isDead_ = true;
+		
 	}
 	ImGui::Begin("aa");
 	ImGui::DragFloat3("pos", &worldTransform_.translation_.x, 0.1f);

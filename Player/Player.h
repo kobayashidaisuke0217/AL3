@@ -11,10 +11,11 @@
 #include "Manager/Collider/CollisionConfig.h"
 #include"PlayerBullet.h"
 #include <list>
+
 class Player :public BaseCharactor,public Collider
 {
 public:
-	void Initialize(const std::vector<Model*>& models) override;
+	void Initialize(const std::vector<Model*>& models,const Vector3& pos) override;
 	 ~Player();
 
 void Update()override;
@@ -28,6 +29,8 @@ void SetViewProjection(const ViewProjection* view) { viewProjection_ = view; }
 Vector3 GetWorldPos() override;
 void OnCollision() override;
 
+const std::list<PlayerBullet*>& GetBullets() const { return bullets_; }
+
 private:
 	enum class Behavior {
 		kRoot,
@@ -39,11 +42,7 @@ WorldTransform worldTransformLarm_;
 WorldTransform worldTransformRarm_;
 WorldTransform worldTransformBody_;
 WorldTransform worldTransformHammer_;
-	/*Model* model_ = nullptr;
-Model* modelHead_ = nullptr;
-	Model* modelBody_ = nullptr;
-Model* modelLarm_ = nullptr;
-Model* modelRarm_ = nullptr;*/
+	
 	uint32_t textureHandle_ = 0u;
 	Input* input_ = nullptr;
 	const ViewProjection* viewProjection_ = nullptr;
@@ -58,7 +57,6 @@ Model* modelRarm_ = nullptr;*/
 	float jumpMove = 0.0f;
 	bool AtackCountFlag ;
 	int atackCount ;
-	
     std::list<PlayerBullet*> bullets_;
 private:
 	void Move();

@@ -11,9 +11,9 @@ Player::~Player() {
 	
 }
 
-void Player::Initialize(const std::vector<Model*>& models)  { 
+void Player::Initialize(const std::vector<Model*>& models, const Vector3& pos) { 
 	
-	BaseCharactor::Initialize(models);
+	BaseCharactor::Initialize(models,pos);
 	models_[kModelHead] = models[kModelHead];
 	models_[kModelBody] = models[kModelBody];
 	models_[kModelLarm] = models[kModelLarm];
@@ -82,6 +82,7 @@ void Player::Update() {
 	if (jumpFlag == false && joyState.Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER) {
 		JUmpInitialize();
 		jumpFlag = true;
+		
 	}
 	// デスフラグの立った弾を削除
 	bullets_.remove_if([](PlayerBullet* bullet) {
@@ -361,9 +362,9 @@ void Player::Atack() {
 }
 Vector3 Player::GetWorldPos() {
    Vector3 worldPos;
-   worldPos.x = worldTransformBase_.matWorld_.m[3][0];
-   worldPos.y = worldTransformBase_.matWorld_.m[3][1];
-   worldPos.z = worldTransformBase_.matWorld_.m[3][2];
+   worldPos.x = worldTransformBody_.matWorld_.m[3][0];
+   worldPos.y = worldTransformBody_.matWorld_.m[3][1];
+   worldPos.z = worldTransformBody_.matWorld_.m[3][2];
    return worldPos;
 }
 
