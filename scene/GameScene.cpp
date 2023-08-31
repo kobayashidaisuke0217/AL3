@@ -6,7 +6,13 @@
 GameScene::GameScene() {}
 
 GameScene::~GameScene() { 
-	
+	for (Enemy* enemy : enemys_) {
+		delete enemy;
+	}
+	for (EnemyBullet* bullet : enemyBullets_) {
+
+		delete bullet;
+	}
 }
 
 void GameScene::Initialize() {
