@@ -141,7 +141,7 @@ void Player::Draw(const ViewProjection& view) {
 
 		bullet->Draw(view);
 	}
-	models_[kModelRarm]->Draw(worldtransform3Dreticle_, view);
+	//models_[kModelRarm]->Draw(worldtransform3Dreticle_, view);
 }
 
 void Player::DrawUI() { sprite2DReticle_->Draw(); }
