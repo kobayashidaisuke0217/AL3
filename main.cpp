@@ -20,7 +20,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	// ゲームウィンドウの作成
 	win = WinApp::GetInstance();
-	win->CreateGameWindow(L"LE2B_12_コバヤシ_ダイスケ_AL3");
+	win->CreateGameWindow(L"LE2B_12_コバヤシ_ダイスケ_ジャンプシューター");
 
 	// DirectX初期化処理
 	dxCommon = DirectXCommon::GetInstance();
@@ -67,7 +67,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		if (win->ProcessMessage()) {
 			break;
 		}
-
+		
 		// ImGui受付開始
 		imguiManager->Begin();
 		// 入力関連の毎フレーム処理
@@ -75,8 +75,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		//グローバル変数の更新
 		GlovalVariables::GetInstance()->Update();
 		// ゲームシーンの毎フレーム処理
-		gameScene->Update();
-		// 軸表示の更新
+		
+
+			gameScene->Update();
+		 // 軸表示の更新
 		axisIndicator->Update();
 		// ImGui受付終了
 		imguiManager->End();
@@ -84,7 +86,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		// 描画開始
 		dxCommon->PreDraw();
 		// ゲームシーンの描画
-		gameScene->Draw();
+		if (gameScene) {
+			gameScene->Draw();
+		}
 		// 軸表示の描画
 		axisIndicator->Draw();
 		// プリミティブ描画のリセット

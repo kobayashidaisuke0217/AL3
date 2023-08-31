@@ -18,6 +18,7 @@
 #include"Enemy/Enemy.h"
 #include "Manager/Collider/CollisionManager.h"
 #include <sstream>
+
 /// <summary>
 /// ゲームシーン
 /// </summary>
@@ -51,6 +52,7 @@ public: // メンバ関数
 
 	void Finalize();
 	void AddEnemyBullet(EnemyBullet* enemyBullet);
+	void AddEnemyCount() { enemyCount += 1; };
 
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
@@ -58,6 +60,9 @@ private: // メンバ変数
 	Audio* audio_ = nullptr;
 	bool isDebugcameraActive_ = false;
 	uint32_t textyreHandle_ = 0;
+	uint32_t ClearTexhandle = 0;
+	uint32_t gameOverTexhandle = 0;
+	uint32_t MissionTexhandle = 0;
 	std::unique_ptr<Model> model_ = nullptr;
 	ViewProjection viewprojection_;
 	std::unique_ptr<Model> enemyModel_ = nullptr;
@@ -70,7 +75,7 @@ private: // メンバ変数
 	std::unique_ptr<Model> playerR_armModel = nullptr;
 	std::unique_ptr<Model> playerHammerModel = nullptr;
 	std::unique_ptr<Model> enemyBulletModel_ = nullptr;
-	
+	std::vector<Model*> playerModels;
 	std::unique_ptr<DebugCamera> debugCamera_ = nullptr;
 	//Player* player_ = nullptr;
 	std::unique_ptr<Player> player_;
@@ -81,10 +86,18 @@ private: // メンバ変数
 	std::unique_ptr<FollowCamera> followCamera_;
 
 	std::unique_ptr<CollisionManager> collisionManager_;
-
+	
+std::unique_ptr<Sprite> titlesprite_;
+	std::unique_ptr<Sprite> Clearsprite_;
+std::unique_ptr<Sprite> GameOversprite_;
+	std::unique_ptr<Sprite> Missionsprite_;
 	std::list<EnemyBullet*> enemyBullets_;
 	std::vector<Model*> enemyModels;
 	std::stringstream enemyPopCommands;
+	int sceneNum;
+	int enemyCount;
+	int pressCount;
+	int missionCount;
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>
