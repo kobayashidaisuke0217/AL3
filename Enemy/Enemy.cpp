@@ -12,7 +12,7 @@ void Enemy::Initialize(const std::vector<Model*>& models,const Vector3& pos) {
 	SetCollisionAttribute(CollisionConfig::kCollisionAttributeEnemy);
 	SetCollisionMask(~CollisionConfig::kCollisionAttributeEnemy);
 	isAlive_ = true;
-	count = 0;
+	count = -20;
 	SetRadius(2.0f);
 }
 
@@ -33,10 +33,10 @@ void Enemy::Update() {
 }
 
 void Enemy::Draw(const ViewProjection& view) {
-	if (isAlive_ == true) {
+	
 
 		models_[kModelBody]->Draw(worldTransform_, view);
-	}
+	
 }
 
 Vector3 Enemy::GetWorldPos() {
@@ -51,7 +51,7 @@ Vector3 Enemy::GetWorldPos() {
 
 void Enemy::OnCollision() { 
 	isAlive_ = false;
-
+	gameScene_->AddEnemyCount();
 }
 
 void Enemy::Fire() {

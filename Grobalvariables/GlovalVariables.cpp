@@ -34,6 +34,7 @@ void GlovalVariables::SetValue(
 }
 
 void GlovalVariables::Update() {
+#ifdef DEBUG
 	if (!ImGui::Begin("Global Variables", nullptr, ImGuiWindowFlags_MenuBar)) {
 		ImGui::End();
 		return;
@@ -68,6 +69,9 @@ void GlovalVariables::Update() {
 		}
 		ImGui::Text("\n");
 
+
+
+
 		if (ImGui::Button("Save")) {
 			SaveFile(groupName);
 			std::string message = std::format("{}.json saved", groupName);
@@ -79,7 +83,7 @@ void GlovalVariables::Update() {
 
 	ImGui::EndMenuBar();
 	ImGui::End();
-
+#endif // DEBUG
 }
 
 void GlovalVariables::SaveFile(const std::string& groupName) {

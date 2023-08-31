@@ -15,6 +15,7 @@ class EnemyBullet : public Collider {
 	void SetPlayer(Player* player) { player_ = player; }
 	void OnCollision() override;
 	Vector3 GetWorldPos() override;
+	bool SetAlive(bool alive) { return isDead_ = alive; }
 
 private:
 	WorldTransform worldTransform_;

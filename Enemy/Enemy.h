@@ -19,6 +19,7 @@ public:
 	void SetPlayer(Player* player) { player_ = player; }
 	void SetGameScene(GameScene* gameScene) { gameScene_ = gameScene; }
 	bool IsAlive() { return isAlive_; }
+	bool SetAlive(bool alive) {return isAlive_ = alive; }
 
 private:
 	bool isAlive_;
