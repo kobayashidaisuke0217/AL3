@@ -8,7 +8,7 @@ enum ModelParts { kModelBody, kModelHead, kModelLarm, kModelRarm, kModelHammer }
 
 class BaseCharactor {
 public:
-	virtual void Initialize(const std::vector<Model*>& models);
+	virtual void Initialize(const std::vector<Model*>& models, const Vector3& pos);
 
 	virtual void Update();
 
