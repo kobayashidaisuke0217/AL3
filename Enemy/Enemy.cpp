@@ -13,14 +13,22 @@ void Enemy::Initialize(const std::vector<Model*>& models,const Vector3& pos) {
 	SetCollisionMask(~CollisionConfig::kCollisionAttributeEnemy);
 	isAlive_ = true;
 	count = 0;
+	SetRadius(2.0f);
 }
 
 void Enemy::Update() {
 	count++;
-	if (count >= 30) {
+	if (count >= 60) {
 		Fire();
 		count = 0;
 	}
+	Vector3 Rotate = Subtract(player_->GetWorldPos(), GetWorldPos());
+
+	worldTransform_.rotation_.y = std::atan2(Rotate.x, Rotate.z);
+	float RotateXZ = Length({Rotate.x, 0.0f, Rotate.z});
+	// X軸回り
+	worldTransform_.rotation_.x = std::atan2(-Rotate.y, RotateXZ);
+
 	BaseCharactor::Update();
 }
 
@@ -60,7 +68,7 @@ void Enemy::Fire() {
 	EnemyBullet* newBullet = new EnemyBullet();
 	newBullet->SetPlayer(player_);
 	// 生成と初期化
-	newBullet->Initialize(models_[kModelHammer], worldTransform_.translation_, velocity);
+	newBullet->Initialize(models_[1], worldTransform_.translation_, velocity);
 
 	gameScene_->AddEnemyBullet(newBullet);
 }
