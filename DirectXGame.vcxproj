@@ -115,9 +115,11 @@
     <ClCompile Include="Grobalvariables\GlovalVariables.cpp" />
     <ClCompile Include="ground\Ground.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Manager\Collider\CollisionManager.cpp" />
     <ClCompile Include="math\MyMath.cpp" />
     <ClCompile Include="math\WorldTransformEx.cpp" />
     <ClCompile Include="Player\Player.cpp" />
+    <ClCompile Include="Player\PlayerBullet.cpp" />
     <ClCompile Include="scene\GameScene.cpp" />
     <ClCompile Include="skyDome\SkyDome.cpp" />
   </ItemGroup>
@@ -150,12 +152,16 @@
     <ClInclude Include="Grobalvariables\GlovalVariables.h" />
     <ClInclude Include="ground\Ground.h" />
     <ClInclude Include="input\Input.h" />
+    <ClInclude Include="Manager\Collider\Collider.h" />
+    <ClInclude Include="Manager\Collider\CollisionConfig.h" />
+    <ClInclude Include="Manager\Collider\CollisionManager.h" />
     <ClInclude Include="math\Matrix4x4.h" />
     <ClInclude Include="math\MyMath.h" />
     <ClInclude Include="math\Vector2.h" />
     <ClInclude Include="math\Vector3.h" />
     <ClInclude Include="math\Vector4.h" />
     <ClInclude Include="Player\Player.h" />
+    <ClInclude Include="Player\PlayerBullet.h" />
     <ClInclude Include="scene\GameScene.h" />
     <ClInclude Include="skyDome\SkyDome.h" />
   </ItemGroup>

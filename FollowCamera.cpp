@@ -1,5 +1,6 @@
 #include "FollowCamera.h"
 #include"MyMath.h"
+#include"ImGuiManager.h"
 void FollowCamera::Initialize() { viewprojection_.Initialize();
 	input_ = Input::GetInstance();
 }
@@ -25,6 +26,7 @@ void FollowCamera::Move() {
 
 		offset = TransformNormal(offset, rotateMatrix);
 		viewprojection_.translation_ = Add(target_->translation_, offset);
+		viewprojection_.translation_.y += 0.5f;
 	}
 }
 
@@ -33,6 +35,21 @@ void FollowCamera::Rotate() {
 
 	if (Input::GetInstance()->GetJoystickState(0, joystate)) {
 		const float kRotateSpeed = 0.02f;
-		viewprojection_.rotation_.y += (float)joystate.Gamepad.sThumbRX/SHRT_MAX * kRotateSpeed;
+		viewprojection_.rotation_.y += (float)joystate.Gamepad.sThumbRX / SHRT_MAX * kRotateSpeed;
+		/*if (viewprojection_.rotation_.x <= 0.15f && viewprojection_.rotation_.x >= -0.15f) {
+			
+			viewprojection_.rotation_.x +=
+			    (float)joystate.Gamepad.sThumbRY / SHRT_MAX * (kRotateSpeed * -1.0f);
+		} else {
+			
+		}*/
 	}
+	/*if (viewprojection_.rotation_.x <= -0.15f) {
+		viewprojection_.rotation_.x = -0.15f;
+	} 
+	if (viewprojection_.rotation_.x >= 0.15f) {
+		viewprojection_.rotation_.x = 0.15f;
+	}*/
+	
+	
 }
