@@ -61,8 +61,7 @@ void Player::Initialize(const std::vector<Model*>& models)  {
 	
 }
 
-void Player::Update() {/* worldTransform_.TransferMatrix();*/
-	//BehaviorRootUpdate();
+void Player::Update() {
 	XINPUT_STATE joyState;
 
 	if (!Input::GetInstance()->GetJoystickState(0, joyState)) {
@@ -136,12 +135,12 @@ void Player::Draw(const ViewProjection& view) {
 	models_[kModelHead]->Draw(worldTransformHead_, view);
 	models_[kModelLarm]->Draw(worldTransformLarm_, view);
 	models_[kModelRarm]->Draw(worldTransformRarm_, view);
-	//models_[kModelHammer]->Draw(worldTransformHammer_, view);
+	
 	for (PlayerBullet* bullet : bullets_) {
 
 		bullet->Draw(view);
 	}
-	//models_[kModelRarm]->Draw(worldtransform3Dreticle_, view);
+	
 }
 
 void Player::DrawUI() { sprite2DReticle_->Draw(); }
@@ -178,7 +177,7 @@ void Player::Move() { XINPUT_STATE joystate;
 	   }
 	   worldTransformBase_.translation_ = Add(move, worldTransformBase_.translation_);
 		worldTransformBody_.translation_ = worldTransformBase_.translation_;
-		//worldTransformBase_.rotation_.y = std::atan2(move.x, move.z);
+		
 		worldTransformBase_.rotation_.y = viewProjection_->rotation_.y;
 		worldTransformBase_.rotation_.z = viewProjection_->rotation_.z;
 		worldTransformBody_.rotation_ = worldTransformBase_.rotation_;
@@ -318,7 +317,7 @@ void Player::Setreticle(const ViewProjection* view) {
 
    Vector3 positionReticle = {
 	   worldtransform3Dreticle_.matWorld_.m[3][0], worldtransform3Dreticle_.matWorld_.m[3][1],
-	   worldtransform3Dreticle_.matWorld_.m[3][2]} /*worldtransform3Dreticle_.translation_*/;
+	   worldtransform3Dreticle_.matWorld_.m[3][2]} ;
 
    Matrix4x4 matViewport =
 	   MakeViewportMatrix(0.0f, 0.0f, WinApp::kWindowWidth, WinApp::kWindowHeight, 0.0f, 1.0f);
