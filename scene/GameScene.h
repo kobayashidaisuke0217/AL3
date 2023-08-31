@@ -17,6 +17,7 @@
 #include<vector>
 #include"Enemy/Enemy.h"
 #include "Manager/Collider/CollisionManager.h"
+#include <sstream>
 /// <summary>
 /// ゲームシーン
 /// </summary>
@@ -48,6 +49,9 @@ public: // メンバ関数
 	/// </summary>
 	void Draw();
 
+	void Finalize();
+	void AddEnemyBullet(EnemyBullet* enemyBullet);
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
@@ -65,16 +69,28 @@ private: // メンバ変数
 	std::unique_ptr<Model> playerL_armModel = nullptr;
 	std::unique_ptr<Model> playerR_armModel = nullptr;
 	std::unique_ptr<Model> playerHammerModel = nullptr;
+	std::unique_ptr<Model> enemyBulletModel_ = nullptr;
+	
 	std::unique_ptr<DebugCamera> debugCamera_ = nullptr;
 	//Player* player_ = nullptr;
 	std::unique_ptr<Player> player_;
 	std::unique_ptr<Enemy> enemy_;
+	std::list<Enemy*> enemys_;
 	std::unique_ptr<Ground> ground_;
 	std::unique_ptr<SkyDome> skyDome_;
 	std::unique_ptr<FollowCamera> followCamera_;
 
 	std::unique_ptr<CollisionManager> collisionManager_;
+
+	std::list<EnemyBullet*> enemyBullets_;
+	std::vector<Model*> enemyModels;
+	std::stringstream enemyPopCommands;
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>
+	/// 
+	private:
+	void EnemySpawn(Vector3 pos);
+	    void EnemyPopData();
+	    void UpdateEnemyPopCommands();
 };
