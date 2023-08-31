@@ -30,6 +30,7 @@ Vector3 GetWorldPos() override;
 void OnCollision() override;
 
 const std::list<PlayerBullet*>& GetBullets() const { return bullets_; }
+int GetHP() { return HP; }
 
 private:
 	enum class Behavior {
@@ -44,6 +45,7 @@ WorldTransform worldTransformBody_;
 WorldTransform worldTransformHammer_;
 	
 	uint32_t textureHandle_ = 0u;
+    uint32_t HPtex = 0u;
 	Input* input_ = nullptr;
 	const ViewProjection* viewProjection_ = nullptr;
 	float floatingParametor_ = 0.0f;
@@ -52,12 +54,17 @@ WorldTransform worldTransformHammer_;
 	std::optional<Behavior> behaviorRequest_ = std::nullopt;
 	/*Sprite* sprite2DReticle_ = nullptr;*/
 	std::unique_ptr<Sprite> sprite2DReticle_ = nullptr;
+	std::unique_ptr<Sprite> spriteHP_[7] ;
 	WorldTransform worldtransform3Dreticle_;
 	bool jumpFlag;
 	float jumpMove = 0.0f;
 	bool AtackCountFlag ;
 	int atackCount ;
     std::list<PlayerBullet*> bullets_;
+	int HP;
+	bool damageFlag;
+	int damageCount;
+
 private:
 	void Move();
 	void SetParent(const WorldTransform* parent);

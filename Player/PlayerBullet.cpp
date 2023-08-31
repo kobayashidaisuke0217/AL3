@@ -21,9 +21,7 @@ void PlayerBullet::Updarte() {
 		isDead_ = true;
 		
 	}
-	ImGui::Begin("aa");
-	ImGui::DragFloat3("pos", &worldTransform_.translation_.x, 0.1f);
-	ImGui::End();
+	
 }
 
 void PlayerBullet::Draw(const ViewProjection& view) {
