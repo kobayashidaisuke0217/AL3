@@ -5,18 +5,28 @@
 #include<Charactor/BaseCharactor.h>
 #include"ViewProjection.h"
 #include <optional>
-class Player :public BaseCharactor
+#include <Sprite.h>
+#include <memory>
+#include "Manager/Collider/Collider.h"
+#include "Manager/Collider/CollisionConfig.h"
+#include"PlayerBullet.h"
+#include <list>
+class Player :public BaseCharactor,public Collider
 {
 public:
 	void Initialize(const std::vector<Model*>& models) override;
-
+	 ~Player();
 
 void Update()override;
 
 void Draw(const ViewProjection& view)override;
+void DrawUI();
 const WorldTransform& GetWorldTransformBody() { return worldTransformBody_; }
 const WorldTransform& GetWorldTransformBase() { return worldTransformBase_; }
 void SetViewProjection(const ViewProjection* view) { viewProjection_ = view; }
+
+Vector3 GetWorldPos() override;
+void OnCollision() override;
 
 private:
 	enum class Behavior {
@@ -41,7 +51,15 @@ Model* modelRarm_ = nullptr;*/
 	int animationFrame;
 	Behavior behavior_ = Behavior::kRoot;
 	std::optional<Behavior> behaviorRequest_ = std::nullopt;
-
+	/*Sprite* sprite2DReticle_ = nullptr;*/
+	std::unique_ptr<Sprite> sprite2DReticle_ = nullptr;
+	WorldTransform worldtransform3Dreticle_;
+	bool jumpFlag;
+	float jumpMove = 0.0f;
+	bool AtackCountFlag ;
+	int atackCount ;
+	
+    std::list<PlayerBullet*> bullets_;
 private:
 	void Move();
 	void SetParent(const WorldTransform* parent);
@@ -53,5 +71,10 @@ private:
 	void BehaviorRootInitialize();
 	void BehaviorAtackInitialize();
 	void ApplyGlobalVariables();
-	
+	void Jump();
+	void JUmpInitialize();
+	//void Atack();
+	void Setreticle(const ViewProjection* view);
+	void Atack();
 };
+
