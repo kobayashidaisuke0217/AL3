@@ -42,6 +42,7 @@ void GameScene::Initialize() {
 	std::vector<Model*> enemyModels{enemyModel_.get()};
 	enemy_ = std::make_unique<Enemy>();
 	enemy_->Initialize(enemyModels);
+	collisionManager_ = std::make_unique<CollisionManager>();
 }
 
 void GameScene::Update() { 
@@ -59,13 +60,13 @@ void GameScene::Update() {
 		viewprojection_.matView = debugCamera_->GetViewProjection().matView;
 		viewprojection_.matProjection = debugCamera_->GetViewProjection().matProjection;
 		viewprojection_.TransferMatrix();
-	} else {
-		viewprojection_.UpdateMatrix();
-	}
+	} 
 	followCamera_->Update();
 	viewprojection_.matView = followCamera_->GetViewProjection().matView;
 	viewprojection_.matProjection = followCamera_->GetViewProjection().matProjection;
 	viewprojection_.TransferMatrix();
+	collisionManager_->ClearColliders();
+	collisionManager_->AddCollider(player_.get());
 }
 
 void GameScene::Draw() {
@@ -111,7 +112,7 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>
-
+	player_->DrawUI();
 	// スプライト描画後処理
 	Sprite::PostDraw();
 

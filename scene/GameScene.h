@@ -16,6 +16,7 @@
 #include "FollowCamera.h"
 #include<vector>
 #include"Enemy/Enemy.h"
+#include "Manager/Collider/CollisionManager.h"
 /// <summary>
 /// ゲームシーン
 /// </summary>
@@ -71,6 +72,8 @@ private: // メンバ変数
 	std::unique_ptr<Ground> ground_;
 	std::unique_ptr<SkyDome> skyDome_;
 	std::unique_ptr<FollowCamera> followCamera_;
+
+	std::unique_ptr<CollisionManager> collisionManager_;
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>
