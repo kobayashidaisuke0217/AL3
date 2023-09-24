@@ -234,7 +234,7 @@ void Player::Update(const ViewProjection view) {
 	bullet->Updarte();
 	}
 	
-	Setreticle(view);
+	Setreticle(viewProjection_);
 }
 void Player::Draw(const ViewProjection view) {
 	model_->Draw(worldTransform_, view, textureHandle_);

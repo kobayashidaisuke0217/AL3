@@ -20,13 +20,14 @@ public:
 	void OnCollision() override;
 
 	const std::list<PlayerBullet*>& GetBullets() const { return bullets_; }
-	void Setparent(const WorldTransform* parent) { worldTransform_.parent_ = parent; }
-	
+	void Setparent(const WorldTransform* parent) { worldTransform_.parent_ = parent; } 
+	void SetViewProjection(const ViewProjection& view) { viewProjection_ = view; }
 
 private:
 	int count = 0;
 	std::list<PlayerBullet*> bullets_;
 	WorldTransform worldTransform_;
+	ViewProjection viewProjection_;
 	Model* model_ = nullptr;
 	PlayerBullet* bullet_ = nullptr;
 	uint32_t textureHandle_ = 0u;
